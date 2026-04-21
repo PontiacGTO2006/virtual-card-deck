@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Virtual Card Decks v1</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Virtual Card Decks: Version 1 (Static)</h1>
+    
+    <p>Click on the top card to draw it. Click anywhere on the card again to dismiss it.</p>
+    
+    <p>To shuffle the deck, click the 'Shuffle Deck' button for the corresponding deck. When you do, the 'Drawn Cards' value will be reset, but the total number of cards in the deck will stay the same.</p>
+
+    <p>When the deck is empty, click the 'Reset Deck' button and then the 'Shuffle Deck' button.</p>
+
+    <div class="deck-wrapper">
+        <!-- Deck 1 -->
+        <div class="deck-section">
+            <h2>Stock Alerts</h2>
+            <div class="controls">
+                <button onclick="shuffleDeck(1)">Shuffle</button>
+                <button onclick="resetDeck(1)">Reset</button>
+            </div>
+            <div class="card-counter">
+                <p>Total Cards: <span id="total-cards-1">0</span></p>
+                <p>Drawn Cards: <span id="drawn-cards-1">0</span></p>
+            </div>
+            <div class="deck-container">
+                <div class="deck" id="deck-1"></div>
+                <div class="drawn-card" id="drawn-card-1" onclick="dismissDrawnCard(1)"></div>
+            </div>
+        </div>
+        <br></br>
+        <!-- Deck 2 -->
+        <div class="deck-section">
+            <h2>World Events</h2>
+            <div class="controls">
+                <button onclick="shuffleDeck(2)">Shuffle</button>
+                <button onclick="resetDeck(2)">Reset</button>
+            </div>
+            <div class="card-counter">
+                <p>Total Cards: <span id="total-cards-2">0</span></p>
+                <p>Drawn Cards: <span id="drawn-cards-2">0</span></p>
+            </div>
+            <div class="deck-container">
+                <div class="deck" id="deck-2"></div>
+                <div class="drawn-card" id="drawn-card-2" onclick="dismissDrawnCard(2)"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,169 @@
+body {
+    text-align: center;
+    font-family: Arial, sans-serif;
+    background-color: #1e1e1e;
+    color: white;
+    margin: 0; /* Remove default margin */
+    padding: 0; /* Remove default padding */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start; /* Align content to the top */
+    height: 100vh;
+}
+
+h1 {
+    margin: 10px 0; /* Reduce space above and below */
+}
+
+.deck-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Align to the top */
+    gap: 170px;
+    flex-wrap: wrap;
+    width: 100%;
+    padding-top: 10px; /* Small top padding */
+}
+
+.button:hover {
+    background-color: darkred;
+    transition: 3.8s;
+}
+
+.deck-section {
+    text-align: center;
+}
+
+.controls {
+    margin: 15px;
+}
+
+button {
+    background-color: #c27b10;
+    color: white;
+    border: none;
+    padding: 10px 16px;
+    margin: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 6px;
+    transition: 0.3s;
+}
+
+button:hover {
+    background-color: #e68900;
+}
+
+.card-counter {
+    font-size: 18px;
+    margin-bottom: 15px;
+}
+
+.deck-container {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 220px;
+    height: 320px;
+}
+
+.deck {
+    position:center;
+    width: 220px;
+    height: 320px;
+}
+
+/* Compact stacking effect */
+.card {
+    width: 220px;
+    height: 320px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-radius: 12px;
+    box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.6);
+    transition: transform 0.3s ease-in-out;
+    transform-style: preserve-3d;
+    cursor: pointer;
+}
+
+/* Dynamic stacking */
+.card:nth-child(n) {
+    transform: translateY(calc(var(--stack-index) * 1.5px));
+}
+
+/* Face-down card for Deck 1 */
+.deck-1 .card .card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 12px;
+    background: url('card-back.png') no-repeat center center/cover;
+    backface-visibility: hidden;
+}
+
+/* Face-down card for Deck 2 */
+.deck-2 .card .card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 12px;
+    background: url('card-back-event.png') no-repeat center center/cover;
+    backface-visibility: hidden;
+}
+
+/* Face-up card */
+.card .card-front {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, #fff 10%, #ddd 90%);
+    backface-visibility: hidden;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 15px;
+    text-align: center;
+    font-size: 18px;
+    color: black;
+    transform: rotateY(180deg);
+}
+
+/* Flip effect */
+.card.flipped {
+    transform: rotateY(180deg);
+}
+
+/* Drawn card stays larger */
+.drawn-card {
+    position: absolute;
+    top: -30px;
+    left: 50%;
+    transform: translateX(-55%);
+    width: 220px;
+    height: 320px;
+    border-radius: 12px;
+    box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.6);
+    background: linear-gradient(to bottom, #fff 10%, #ddd 90%);
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 15px;
+    text-align: center;
+    font-size: 18px;
+    color: black;
+    cursor: pointer;
+    transition: opacity 0.4s ease-out;
+}
+
+/* Enhanced title */
+.card-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
