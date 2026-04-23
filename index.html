@@ -7,13 +7,37 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>Virtual Card Decks: Version 1 (Static)</h1>
+    <h1>Virtual Card Decks: Version 2 (Dynamic; WIP)</h1>
     
+    <p>To set up your card deck, click the "Setup Decks" button below and customize your setup. Optionally, click one of the buttons below to load from a preset. You can have up to 100 cards per deck and up to 4 decks.</p>
+    
+    <h2>Deck Usage Instructions</h2>
     <p>Click on the top card to draw it. Click anywhere on the card again to dismiss it.</p>
     
-    <p>To shuffle the deck, click the 'Shuffle Deck' button for the corresponding deck. When you do, the 'Drawn Cards' value will be reset, but the total number of cards in the deck will stay the same.</p>
-
-    <p>When the deck is empty, click the 'Reset Deck' button and then the 'Shuffle Deck' button.</p>
+    <p>To shuffle the deck, click the 'Shuffle Deck' button for the corresponding deck. When you do, the 'Drawn Cards' value will be reset, but the total number of cards in the deck will stay the same. When the deck is empty, click the 'Reset Deck' button and then the 'Shuffle Deck' button.</p>
+    <hr>
+    
+    <button onclick="launchSetupModal()" style="font-size: 22px;">Setup Decks</button>
+    <!--Modal overlay-->
+    <div id="modalContainer" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5)">
+        <!--Modal content-->
+        <div style="background:rgb(68, 65, 65); margin:10% auto; padding:20px; width:300px; border-radius:8px;">
+            <h3>Form (fill with the demands)</h3>
+            <form>
+                <input type="text" placeholder="Name"><br><br>
+                <button type="submit">Submit</button> <!--This will trigger an updated 'renderDeck()' or 'loadDeck()' method in the JS-->
+                <button type="button" onclick="closeSetupModal()">Cancel</button>
+            </form>
+        </div>
+    </div>
+    <script>
+    function launchSetupModal() {
+        document.getElementById('modalContainer').style.display = 'block';
+    }
+    function closeSetupModal() {
+        document.getElementById('modalContainer').style.display = 'none';
+    }
+    </script>
 
     <div class="deck-wrapper">
         <!-- Deck 1 -->
