@@ -196,7 +196,7 @@ function dismissDrawnCard(deckNum) {
 }
 
 // Function to render a deck with different card-back styles
-function renderDeck(deckNum) {
+function renderDeck(deckNum, cardData) {
     const deckContainer = document.getElementById(`deck-${deckNum}`);
     deckContainer.innerHTML = '';
     deckContainer.classList.add(`deck-${deckNum}`); // Apply deck-specific styles
@@ -205,7 +205,7 @@ function renderDeck(deckNum) {
         let cardElement = document.createElement('div');
         cardElement.classList.add('card');
         cardElement.style.setProperty('--stack-index', index);
-        cardElement.innerHTML = `<div class="card-front"></div><div class="card-back"></div>`;
+        cardElement.innerHTML = `<img src="${imageSrc}" alt="Card Image">`; // currently in progress; results in the card faces not appearing
         cardElement.addEventListener("click", (e) => drawCard(deckNum, e));
         deckContainer.appendChild(cardElement);
     });
@@ -231,6 +231,23 @@ function loadDeckState(deckNum) {
         decks[deckNum].drawnCards = 0;
     }
 }
+
+// told the file to be rendered
+const input = document.getElementById('card-back-art')
+input.addEventListener('change', (event) => {
+    const files = event.target.files;
+    container=innerHTML = '';
+
+    Array.from(files).forEach(file => {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            const cardData = e.target.result;
+            renderDeck(cardData)
+        };
+
+        reader.readAsDataURL(file);
+    });
+});
 
 loadDeckState(1);
 loadDeckState(2);

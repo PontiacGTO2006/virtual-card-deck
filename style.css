@@ -1,6 +1,6 @@
 body {
     text-align: center;
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-family: 'Inter';
     background-color: #1e1e1e;
     color: white;
     margin: 20px 80px; /* Remove default margin */
@@ -10,6 +10,11 @@ body {
     align-items: center;
     justify-content: flex-start; /* Align content to the top */
     height: 100vh;
+}
+
+.num-decks {
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    display: none;
 }
 
 h1 {

@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Virtual Card Decks v1</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
 </head>
 <body>
     <h1>Virtual Card Decks: Version 2 (Dynamic; WIP)</h1>
@@ -19,15 +22,56 @@
     
     <button onclick="launchSetupModal()" style="font-size: 22px;">Setup Decks</button>
     <!--Modal overlay-->
-    <div id="modalContainer" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5)">
+    <div id="modalContainer" style="display:flex; flex-direction: column; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5)">
         <!--Modal content-->
-        <div style="background:rgb(68, 65, 65); margin:10% auto; padding:20px; width:300px; border-radius:8px;">
-            <h3>Form (fill with the demands)</h3>
-            <form>
-                <input type="text" placeholder="Name"><br><br>
-                <button type="submit">Submit</button> <!--This will trigger an updated 'renderDeck()' or 'loadDeck()' method in the JS-->
-                <button type="button" onclick="closeSetupModal()">Cancel</button>
-            </form>
+        <div style="
+            background: rgb(68, 65, 65);
+            color: white; /* Added for readability */
+            margin: 5% auto; /* Reduced from 10% */
+            padding: 25px;
+            width: 400px; /* Increased width */
+            border-radius: 8px;
+            font-family: sans-serif;
+            box-sizing: border-box; /* Ensures padding doesn't affect width */
+        ">
+            <h2 style="margin-top: 0;">Deck Set up (Apple Clean up)</h2>
+            <p><em>Set Up your decks</em></p>
+
+            <div style="margin-bottom: 15px;">
+                <label for="num-decks" style="display:block; margin-bottom:5px;">Number of Decks:</label>
+                <select name="num-decks" id="num-decks" style="width: 100%; padding: 5px;">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                </select>
+            </div>
+
+            <p style="border-top: 1px solid #888; padding-top: 10pt;"><em>Configure the deck 1</em></p>
+
+            <div class="name-group" style="margin-bottom: 15px;">
+                <label for="deck1-name" style="display:block; margin-bottom:5px;">Deck Name:</label>
+                <input name="deck1-name" id="deck1-name" style="width: 100%; padding: 5px; box-sizing:border-box;">
+            </div>
+
+            <!-- Improved File Upload Section -->
+            <div class="cardback-group" style="
+                background: rgba(0,0,0,0.2);
+                padding: 15px;
+                border-radius: 5px;
+                margin-bottom: 20px;
+            ">
+                <label for="card-back-art" style="display:block; margin-bottom:8px;">Card Back Art (any image format):</label>
+                <div style="display: flex; gap: 10px; align-items: center;">
+                    <input type="file" accept="image/*" name="card-back-art" id="card-back-art" style="flex-grow: 1;">
+                    <button type="submit" style="padding: 5px 10px;">Upload</button>
+                </div>
+            </div>
+
+            <div style="display: flex; justify-content: space-between; gap: 10px;">
+                <button type="submit" style="padding: 10px; flex-grow: 1;">Submit</button>
+                <button type="button" onclick="closeSetupModal()" style="padding: 10px; background-color: #636363;">Cancel</button>
+            </div>
         </div>
     </div>
     <script>
@@ -37,6 +81,70 @@
     function closeSetupModal() {
         document.getElementById('modalContainer').style.display = 'none';
     }
+
+    // JS code for dynamic switching of order form options-->
+    var removeDropDownOptions = function(dd) {
+        if (dd) {
+            while (dd.options.length) {
+                dd.options.remove(0);
+            }
+        }
+    }
+    
+    var updateDeckSelection = function(trimDD, configDD, trims, configs) {
+        if (trimDD) {
+            removeDropDownOptions(trimDD);
+            for (var i = 0; i < trims.length; i++) {
+                var option = new Option(trims[i], trims[i]);
+                trimDD.add(option);
+            }
+        }
+        if (configDD) {
+            removeDropDownOptions(configDD);
+            for (var i = 0; i < configs.length; i++) {
+                var option = new Option(configs[i], configs[i]);
+                configDD.add(option);
+            }
+        }
+    }
+
+    var updateOptionLists = function() {
+        var modelDropDown = document.getElementById('model');
+        var trimDropDown = document.getElementById('trim');
+        var configDropDown = document.getElementById('configuration-type');
+
+        switch (modelDropDown.value) {
+            case "S-Line":
+                var trims = ["S1", "S2", "S3", "S4", "S5"];
+                var configs = [
+                    "S Line - 3 mph (4.8 km/h) speed",
+                    "S Line - 6 mph (9.6 km/h) speed"
+                ];
+                updateTrimAndConfigDDs(trimDropDown, configDropDown, trims, configs);
+                break;
+            case "E-Line":
+                var trims = ["E1", "E2", "E3", "E4", "E5", "E5 Extra Capacity"];
+                var configs = [
+                    "E Line - 10 mph (16 km/h) speed",
+                    "E Line - 6 mph (9.6 km/h) speed, rear door",
+                    "E Line - 10 mph (16 km/h) speed, rear door"
+                ];
+                updateTrimAndConfigDDs(trimDropDown, configDropDown, trims, configs);
+                break;
+            case "Z-Line":
+                var trims = ["Z1", "Z2", "Z3", "Z4", "Z5"];
+                var configs = [
+                    "Z-Line - 14 mph (22 km/h) speed",
+                    "Z-Line - 14 mph (22 km/h) speed, rear door",
+                ];
+                updateTrimAndConfigDDs(trimDropDown, configDropDown, trims, configs);
+                break;
+            default:
+                console.debug("We saw something we didn't recognize.");
+                break;
+        };
+    }
+    document.getElementById('model').onchange = updateOptionLists;
     </script>
 
     <div class="deck-wrapper">
