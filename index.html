@@ -8,6 +8,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"> <!--FontAwesome 6 embed since we don't like logging in and creating stupid Kits here on the Design Team-->
+
 </head>
 <body>
     <h1>Virtual Card Decks: Version 2 (Dynamic; WIP)</h1>
@@ -29,17 +31,22 @@
             color: white; /* Added for readability */
             margin: 5% auto; /* Reduced from 10% */
             padding: 25px;
-            width: 400px; /* Increased width */
+            width: 800px; /* Increased width */
             border-radius: 8px;
             font-family: sans-serif;
             box-sizing: border-box; /* Ensures padding doesn't affect width */
+            position: relative;
         ">
-            <h2 style="margin-top: 0;">Deck Set up (Apple Clean up)</h2>
-            <p><em>Set Up your decks</em></p>
+            <h2 style="margin-top: 0">Deck Set up (Apple Clean up)</h2>
+            <p><em>Note: Currently we only have support for up to 4 decks. We are working on expanding this functionality; apologies for the inconvenience.</em></p>
+
+            <button type="small-close-btn" class="close-btn" style="position: absolute;" onclick="closeSetupModal()">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
 
             <div style="margin-bottom: 15px;">
                 <label for="num-decks" style="display:block; margin-bottom:5px;">Number of Decks:</label>
-                <select name="num-decks" id="num-decks" style="width: 100%; padding: 5px;">
+                <select name="num-decks" id="num-decks" style="width: 50%; padding: 5px;">
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>
@@ -51,20 +58,136 @@
 
             <div class="name-group" style="margin-bottom: 15px;">
                 <label for="deck1-name" style="display:block; margin-bottom:5px;">Deck Name:</label>
-                <input name="deck1-name" id="deck1-name" style="width: 100%; padding: 5px; box-sizing:border-box;">
+                <input name="deck1-name" id="deck1-name" style="width: 50%; padding: 5px; box-sizing:border-box;" placeholder="Stock Alerts">
             </div>
 
             <!-- Improved File Upload Section -->
             <div class="cardback-group" style="
-                background: rgba(0,0,0,0.2);
                 padding: 15px;
                 border-radius: 5px;
                 margin-bottom: 20px;
             ">
-                <label for="card-back-art" style="display:block; margin-bottom:8px;">Card Back Art (any image format):</label>
-                <div style="display: flex; gap: 10px; align-items: center;">
+                <label for="card-back-art" style="display:block; margin-bottom:8px;"><strong>Card Back Art (any image format):</strong></label>
+                <div style="gap: 10px; align-items: center;">
                     <input type="file" accept="image/*" name="card-back-art" id="card-back-art" style="flex-grow: 1;">
-                    <button type="submit" style="padding: 5px 10px;">Upload</button>
+                    <button type="submit" style="padding: 10px 10px;">Upload</button>
+                </div>
+            </div>
+
+            <div class="cardface-group" style="
+                padding: 1px;
+                border-radius: 5px;
+                margin-bottom: 20px;
+                align-items: center;
+                box-sizing: border-box;
+            ">
+                <label for="card-back-color" style="display:block; margin-bottom:8px;"><strong>Card Face Background Color:</strong></label>
+                <div style="display:block; gap: 10px; align-items: center;">
+                    <label for="colorPicker">Select a color:</label>
+                    <input type="color" id="colorPicker" name="colorPicker" value="#ff0000">
+                    <button id="chooseBtn">CHOOSE</button>
+                </div>
+            </div>
+
+            <p style="border-top: 1px solid #888; padding-top: 10pt;"><em>Configure the deck 2</em></p>
+            <div class="name-group" style="margin-bottom: 15px;">
+                <label for="deck1-name" style="display:block; margin-bottom:5px;">Deck Name:</label>
+                <input name="deck1-name" id="deck1-name" style="width: 50%; padding: 5px; box-sizing:border-box;" placeholder="World Events">
+            </div>
+
+            <!-- Improved File Upload Section -->
+            <div class="cardback-group" style="
+                padding: 15px;
+                border-radius: 5px;
+                margin-bottom: 20px;
+            ">
+                <label for="card-back-art" style="display:block; margin-bottom:8px;"><strong>Card Back Art (any image format):</strong></label>
+                <div style="gap: 10px; align-items: center;">
+                    <input type="file" accept="image/*" name="card-back-art" id="card-back-art" style="flex-grow: 1;">
+                    <button type="submit" style="padding: 10px 10px;">Upload</button>
+                </div>
+            </div>
+
+            <div class="cardface-group" style="
+                padding: 1px;
+                border-radius: 5px;
+                margin-bottom: 20px;
+                align-items: center;
+                box-sizing: border-box;
+            ">
+                <label for="card-back-color" style="display:block; margin-bottom:8px;"><strong>Card Face Background Color:</strong></label>
+                <div style="display:block; gap: 10px; align-items: center;">
+                    <label for="colorPicker">Select a color:</label>
+                    <input type="color" id="colorPicker" name="colorPicker" value="#ff0000">
+                    <button id="chooseBtn">CHOOSE</button>
+                </div>
+            </div>
+
+            <p style="border-top: 1px solid #888; padding-top: 10pt;"><em>Configure the deck 3</em></p>
+            <div class="name-group" style="margin-bottom: 15px;">
+                <label for="deck1-name" style="display:block; margin-bottom:5px;">Deck Name:</label>
+                <input name="deck1-name" id="deck1-name" style="width: 50%; padding: 5px; box-sizing:border-box;" placeholder="Monster Cards">
+            </div>
+
+            <!-- Improved File Upload Section -->
+            <div class="cardback-group" style="
+                padding: 15px;
+                border-radius: 5px;
+                margin-bottom: 20px;
+            ">
+                <label for="card-back-art" style="display:block; margin-bottom:8px;"><strong>Card Back Art (any image format):</strong></label>
+                <div style="gap: 10px; align-items: center;">
+                    <input type="file" accept="image/*" name="card-back-art" id="card-back-art" style="flex-grow: 1;">
+                    <button type="submit" style="padding: 10px 10px;">Upload</button>
+                </div>
+            </div>
+
+            <div class="cardface-group" style="
+                padding: 1px;
+                border-radius: 5px;
+                margin-bottom: 20px;
+                align-items: center;
+                box-sizing: border-box;
+            ">
+                <label for="card-back-color" style="display:block; margin-bottom:8px;"><strong>Card Face Background Color:</strong></label>
+                <div style="display:block; gap: 10px; align-items: center;">
+                    <label for="colorPicker">Select a color:</label>
+                    <input type="color" id="colorPicker" name="colorPicker" value="#ff0000">
+                    <button id="chooseBtn">CHOOSE</button>
+                </div>
+            </div>
+
+            <p style="border-top: 1px solid #888; padding-top: 10pt;"><em>Configure the deck 4</em></p>
+            <div class="name-group" style="margin-bottom: 15px;">
+                <label for="deck1-name" style="display:block; margin-bottom:5px;">Deck Name:</label>
+                <input name="deck1-name" id="deck1-name" style="width: 50%; padding: 5px; box-sizing:border-box;" placeholder="Noisy Cards">
+            </div>
+
+            <!-- Improved File Upload Section -->
+            <div class="cardback-group" style="
+                padding: 15px;
+                border-radius: 5px;
+                margin-bottom: 20px;
+            ">
+                <label for="card-back-art" style="display:block; margin-bottom:8px;"><strong>Card Back Art (any image format):</strong></label>
+                <div style="gap: 10px; align-items: center;">
+                    <input type="file" accept="image/*" name="card-back-art" id="card-back-art" style="flex-grow: 1;">
+                    <button type="submit" style="padding: 10px 10px;">Upload</button>
+                </div>
+            </div>
+
+            <div class="cardface-group" style="
+                padding: 1px;
+                border-radius: 5px;
+                margin-bottom: 20px;
+                align-items: center;
+                box-sizing: border-box;
+            ">
+                <label for="card-back-color" style="display:block; margin-bottom:8px;"><strong>Card Face Background Color:</strong></label>
+                <div style="display:block; gap: 10px; align-items: center;">
+                    <label for="colorPicker">Select a color:</label>
+                    <input type="color" id="colorPicker" name="colorPicker" value="#ff0000">
+                    <button id="chooseBtn">CHOOSE</button>
                 </div>
             </div>
 
@@ -74,6 +197,8 @@
             </div>
         </div>
     </div>
+
+    <!--Master JS logic to control the modal and its various functions-->
     <script>
     function launchSetupModal() {
         document.getElementById('modalContainer').style.display = 'block';
@@ -82,69 +207,16 @@
         document.getElementById('modalContainer').style.display = 'none';
     }
 
-    // JS code for dynamic switching of order form options-->
-    var removeDropDownOptions = function(dd) {
-        if (dd) {
-            while (dd.options.length) {
-                dd.options.remove(0);
-            }
-        }
-    }
-    
-    var updateDeckSelection = function(trimDD, configDD, trims, configs) {
-        if (trimDD) {
-            removeDropDownOptions(trimDD);
-            for (var i = 0; i < trims.length; i++) {
-                var option = new Option(trims[i], trims[i]);
-                trimDD.add(option);
-            }
-        }
-        if (configDD) {
-            removeDropDownOptions(configDD);
-            for (var i = 0; i < configs.length; i++) {
-                var option = new Option(configs[i], configs[i]);
-                configDD.add(option);
-            }
-        }
-    }
+    let selectedColor = ""; // stores the hex code of the card face background color
+    const picker = document.getElementById('colorPicker');
+    const chooseBtn = document.getElementById('chooseBtn');
 
-    var updateOptionLists = function() {
-        var modelDropDown = document.getElementById('model');
-        var trimDropDown = document.getElementById('trim');
-        var configDropDown = document.getElementById('configuration-type');
-
-        switch (modelDropDown.value) {
-            case "S-Line":
-                var trims = ["S1", "S2", "S3", "S4", "S5"];
-                var configs = [
-                    "S Line - 3 mph (4.8 km/h) speed",
-                    "S Line - 6 mph (9.6 km/h) speed"
-                ];
-                updateTrimAndConfigDDs(trimDropDown, configDropDown, trims, configs);
-                break;
-            case "E-Line":
-                var trims = ["E1", "E2", "E3", "E4", "E5", "E5 Extra Capacity"];
-                var configs = [
-                    "E Line - 10 mph (16 km/h) speed",
-                    "E Line - 6 mph (9.6 km/h) speed, rear door",
-                    "E Line - 10 mph (16 km/h) speed, rear door"
-                ];
-                updateTrimAndConfigDDs(trimDropDown, configDropDown, trims, configs);
-                break;
-            case "Z-Line":
-                var trims = ["Z1", "Z2", "Z3", "Z4", "Z5"];
-                var configs = [
-                    "Z-Line - 14 mph (22 km/h) speed",
-                    "Z-Line - 14 mph (22 km/h) speed, rear door",
-                ];
-                updateTrimAndConfigDDs(trimDropDown, configDropDown, trims, configs);
-                break;
-            default:
-                console.debug("We saw something we didn't recognize.");
-                break;
-        };
-    }
-    document.getElementById('model').onchange = updateOptionLists;
+    chooseBtn.addEventListener('click', () => {
+        // save the 7-character hex code to the selectedColor variable
+        selectedColor = picker.value;
+        console.log("User color input saved successfully:", selectedColor);
+        // we will then leverage selectedColor when rendering the deck(s)
+    })
     </script>
 
     <div class="deck-wrapper">

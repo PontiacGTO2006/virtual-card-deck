@@ -60,6 +60,18 @@ button {
     transition: 0.3s;
 }
 
+.close-btn {
+    background-color: black;
+    transition: 0.3s;
+    padding: 6px 8px;
+    top: 6px;
+    right: 6px;
+}
+
+.close-btn:hover {
+    background-color:#ca2828
+}
+
 button:hover {
     background-color: #e68900;
 }
