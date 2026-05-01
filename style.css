@@ -35,6 +35,22 @@ p {
     padding-top: 10px; /* Small top padding */
 }
 
+/* Custom scrollbar for the modal */
+#modalContainer div[style*="overflow-y: auto"]::-webkit-scrollbar {
+    width: 10px; /* Thinner scrollbar */
+}
+#modalContainer div[style*="overflow-y: auto"]::-webkit-scrollbar-track {
+    background: rgba(68, 65, 65, 0.5); /* Subtle track matching modal background */
+    border-radius: 10px;
+}
+#modalContainer div[style*="overflow-y: auto"]::-webkit-scrollbar-thumb {
+    background: #888; /* Gray thumb */
+    border-radius: 10px;
+}
+#modalContainer div[style*="overflow-y: auto"]::-webkit-scrollbar-thumb:hover {
+    background: #555; /* Darker on hover for interactivity */
+}
+
 .button:hover {
     background-color: darkred;
     transition: 3.8s;
@@ -59,6 +75,19 @@ button {
     border-radius: 6px;
     transition: 0.3s;
 }
+
+.cancel-fullsize {
+    background-color: gray;
+    transition: 0.3s;
+    padding: 6px 8px;
+}
+
+.cancel-fullsize:hover {
+    background-color: #a7a7a7 !important;
+    transition: 0.3s;
+    padding: 6px 8px;
+}
+
 
 .close-btn {
     background-color: black;

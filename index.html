@@ -24,20 +24,23 @@
     
     <button onclick="launchSetupModal()" style="font-size: 22px;">Setup Decks</button>
     <!--Modal overlay-->
-    <div id="modalContainer" style="display:flex; flex-direction: column; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5)">
+    <div id="modalContainer" style="display:none; flex-direction: column; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); overflow-y: auto; backdrop-filter: blur(3px);">
         <!--Modal content-->
         <div style="
             background: rgb(68, 65, 65);
             color: white; /* Added for readability */
             margin: 5% auto; /* Reduced from 10% */
-            padding: 25px;
+            padding: 25px 35px 25px 25px; /* Increased padding for better spacing */
             width: 800px; /* Increased width */
-            border-radius: 8px;
+            max-height: 80vh; /* Limit height to 80% of viewport */
+            border-radius: 12px;
+            overflow-y: auto; /* Enable vertical scrolling if content exceeds max-height */
             font-family: sans-serif;
             box-sizing: border-box; /* Ensures padding doesn't affect width */
             position: relative;
+            box-shadow: 0px 10px 30px rgba(0,0,0,0.3); /* Added subtle shadow for depth */
         ">
-            <h2 style="margin-top: 0">Deck Set up (Apple Clean up)</h2>
+            <h2 style="margin-top: 0; font-size: 30px;">Deck Setup</h2>
             <p><em>Note: Currently we only have support for up to 4 decks. We are working on expanding this functionality; apologies for the inconvenience.</em></p>
 
             <button type="small-close-btn" class="close-btn" style="position: absolute;" onclick="closeSetupModal()">
@@ -193,7 +196,7 @@
 
             <div style="display: flex; justify-content: space-between; gap: 10px;">
                 <button type="submit" style="padding: 10px; flex-grow: 1;">Submit</button>
-                <button type="button" onclick="closeSetupModal()" style="padding: 10px; background-color: #636363;">Cancel</button>
+                <button type="button" class="cancel-fullsize" onclick="closeSetupModal()" style="padding: 10px; background-color: #636363;">Cancel</button>
             </div>
         </div>
     </div>
@@ -222,7 +225,7 @@
     <div class="deck-wrapper">
         <!-- Deck 1 -->
         <div class="deck-section">
-            <h2>Stock Alerts</h2>
+            <h2>Deck 1</h2>
             <div class="controls">
                 <button onclick="shuffleDeck(1)">Shuffle</button>
                 <button onclick="resetDeck(1)">Reset</button>
@@ -239,7 +242,7 @@
         <br></br>
         <!-- Deck 2 -->
         <div class="deck-section">
-            <h2>World Events</h2>
+            <h2>Deck 2</h2>
             <div class="controls">
                 <button onclick="shuffleDeck(2)">Shuffle</button>
                 <button onclick="resetDeck(2)">Reset</button>
