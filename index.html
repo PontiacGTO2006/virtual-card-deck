@@ -24,7 +24,7 @@
     
     <button onclick="launchSetupModal()" style="font-size: 22px;">Setup Decks</button>
     <!--Modal overlay-->
-    <div id="modalContainer" style="display:none; flex-direction: column; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); overflow-y: auto; backdrop-filter: blur(3px);">
+    <div id="modalContainer" style="display:none; flex-direction: column; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); overflow-y: auto; backdrop-filter: blur(3px); font-family: 'Inter', sans-serif; z-index: 1000;">
         <!--Modal content-->
         <div style="
             background: rgb(68, 65, 65);
@@ -57,7 +57,9 @@
                 </select>
             </div>
 
-            <p style="border-top: 1px solid #888; padding-top: 10pt;"><em>Configure the deck 1</em></p>
+            <!-- Deck 1 Configuration -->
+            <div id="deck-setup-1">
+            <p style="border-top: 1px solid #888; padding-top: 10pt; font-size: 20px;"><em>Configure the deck 1</em></p> <!--Make this a different font-->
 
             <div class="name-group" style="margin-bottom: 15px;">
                 <label for="deck1-name" style="display:block; margin-bottom:5px;">Deck Name:</label>
@@ -91,8 +93,11 @@
                     <button id="chooseBtn">CHOOSE</button>
                 </div>
             </div>
+            </div>
 
-            <p style="border-top: 1px solid #888; padding-top: 10pt;"><em>Configure the deck 2</em></p>
+            <!-- Deck 2 Configuration -->
+            <div id="deck-setup-2">
+            <p style="border-top: 1px solid #888; padding-top: 10pt; font-size: 20px;"><em>Configure the deck 2</em></p> <!--Make this a different font-->
             <div class="name-group" style="margin-bottom: 15px;">
                 <label for="deck1-name" style="display:block; margin-bottom:5px;">Deck Name:</label>
                 <input name="deck1-name" id="deck1-name" style="width: 50%; padding: 5px; box-sizing:border-box;" placeholder="World Events">
@@ -125,8 +130,11 @@
                     <button id="chooseBtn">CHOOSE</button>
                 </div>
             </div>
+            </div>
 
-            <p style="border-top: 1px solid #888; padding-top: 10pt;"><em>Configure the deck 3</em></p>
+            <!-- Deck 3 Configuration -->
+            <div id="deck-setup-3">
+            <p style="border-top: 1px solid #888; padding-top: 10pt; font-size: 20px;"><em>Configure the deck 3</em></p> <!--Make this a different font-->
             <div class="name-group" style="margin-bottom: 15px;">
                 <label for="deck1-name" style="display:block; margin-bottom:5px;">Deck Name:</label>
                 <input name="deck1-name" id="deck1-name" style="width: 50%; padding: 5px; box-sizing:border-box;" placeholder="Monster Cards">
@@ -159,8 +167,11 @@
                     <button id="chooseBtn">CHOOSE</button>
                 </div>
             </div>
+            </div>
 
-            <p style="border-top: 1px solid #888; padding-top: 10pt;"><em>Configure the deck 4</em></p>
+            <!-- Deck 4 Configuration -->
+            <div id="deck-setup-4">
+            <p style="border-top: 1px solid #888; padding-top: 10pt; font-size: 20px;"><em>Configure the deck 4</em></p> <!--Make this a different font-->
             <div class="name-group" style="margin-bottom: 15px;">
                 <label for="deck1-name" style="display:block; margin-bottom:5px;">Deck Name:</label>
                 <input name="deck1-name" id="deck1-name" style="width: 50%; padding: 5px; box-sizing:border-box;" placeholder="Noisy Cards">
@@ -193,9 +204,11 @@
                     <button id="chooseBtn">CHOOSE</button>
                 </div>
             </div>
+            </div>
 
-            <div style="display: flex; justify-content: space-between; gap: 10px;">
-                <button type="submit" style="padding: 10px; flex-grow: 1;">Submit</button>
+            <p style="border-top: 1px solid #888; padding-top: 10pt;"></p>
+            <div style="display: block; justify-content: space-between; gap: 10px;">
+                <button type="submit" class="submit-fullsize" style="padding: 10px; flex-grow: 1;"><strong>Submit</strong></button>
                 <button type="button" class="cancel-fullsize" onclick="closeSetupModal()" style="padding: 10px; background-color: #636363;">Cancel</button>
             </div>
         </div>
@@ -220,6 +233,35 @@
         console.log("User color input saved successfully:", selectedColor);
         // we will then leverage selectedColor when rendering the deck(s)
     })
+
+    // Handle dynamic deck configuration sections
+    const numDecksSelect = document.getElementById('num-decks');
+    
+    function updateDeckSections() {
+        const selectedNum = parseInt(numDecksSelect.value);
+        
+        // Hide all deck setup sections
+        for (let i = 1; i <= 4; i++) {
+            const section = document.getElementById(`deck-setup-${i}`);
+            if (section) {
+                section.style.display = 'none';
+            }
+        }
+        
+        // Show only the selected number of sections
+        for (let i = 1; i <= selectedNum; i++) {
+            const section = document.getElementById(`deck-setup-${i}`);
+            if (section) {
+                section.style.display = 'block';
+            }
+        }
+    }
+    
+    // Listen for changes to the dropdown
+    numDecksSelect.addEventListener('change', updateDeckSections);
+    
+    // Initialize on page load
+    updateDeckSections();
     </script>
 
     <div class="deck-wrapper">
