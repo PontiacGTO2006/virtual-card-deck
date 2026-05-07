@@ -1,6 +1,8 @@
 # virtual-card-deck
 A handy utility that allows you to create and customize (currently code-only) card decks for a board game. Runs in your browser, or use the demo site (full UI-based customization coming in the second version). This project is coded primarily with HTML and CSS, with some JavaScript to power the card drawing logic.
 
+**NOTE:** At the moment, I am currently working on revising this utility so that you can customize your own decks via an interactive UI. During this time, the website may not work properly, if at all. This notice will be removed and replcaed once construction is completed.
+
 # Usage
 This repository contains a pre-loaded version of the virtual card deck for a stock market game. In this version, there are two decks: a Stock Alerts deck with 80 varying cards, and a World Events deck with 35 cards. You can change the card background as it appears on the web app; all you have to do is create your PNG files (ideally 250 x 370 px) and change the paths where required in the code. You also have full control over changing the card descriptions and titles; simply navigate to the 'script.js' file and change the values in the dictionaries.
 
