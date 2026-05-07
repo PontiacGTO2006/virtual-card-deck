@@ -9,3 +9,8 @@ This repository contains a pre-loaded version of the virtual card deck for a sto
 To use the virtual card deck, you have a couple of options. First, you can clone this repo, which allows you full control over customizing the card deck. Then, you can use a simple browser extension like "Go Live" or "IIS Express" to run it in a web browser. If you absolutely must use the web app on a mobile device, you can use VS Code's Port Forwarding system to create a public port (via DevTunnels) that you can access on a phone. However, **it is highly recommended that you use at least a tablet** to run this web app for best performance. I am working on optimizing it for mobile use.
 
 In a future version, which I'm also working on, you will be able to set up and customize your card deck right from the web browser (e.g., the demo app that I have running on my website), so you don't have to clone the repo at all. For now, though, you must clone the code to get the most out of the virtual card deck.
+
+# Detailed Plan for V2
+The architecture for V2 of the virtual card deck involves three main components: the **deck setup modal**, the **modal input processing system**, and the updated **deck construction system**. The deck-setup modal is entirely user-facing. The modal input processing system needs to take the user's settings for creating the deck(s) and pass that along to the deck construction system, so that it can properly construct the decks according to the user's specification.
+
+**The modal input processing system** will utilize **LocalStorage** in the browser to store the user's deck creation preferences. The data remains even after the browser is closed and reopened; this way, there is no need to have functionality for creating presets.

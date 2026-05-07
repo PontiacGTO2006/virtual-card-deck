@@ -46,176 +46,228 @@
             <button type="small-close-btn" class="close-btn" style="position: absolute;" onclick="closeSetupModal()">
                 <i class="fa-solid fa-xmark"></i>
             </button>
-
-            <div style="margin-bottom: 15px;">
-                <label for="num-decks" style="display:block; margin-bottom:5px;">Number of Decks:</label>
-                <select name="num-decks" id="num-decks" style="width: 50%; padding: 5px;">
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                </select>
-            </div>
-
-            <!-- Deck 1 Configuration -->
-            <div id="deck-setup-1">
-            <p style="border-top: 1px solid #888; padding-top: 10pt; font-size: 20px;"><em>Configure the deck 1</em></p> <!--Make this a different font-->
-
-            <div class="name-group" style="margin-bottom: 15px;">
-                <label for="deck1-name" style="display:block; margin-bottom:5px;">Deck Name:</label>
-                <input name="deck1-name" id="deck1-name" style="width: 50%; padding: 5px; box-sizing:border-box;" placeholder="Stock Alerts">
-            </div>
-
-            <!-- Improved File Upload Section -->
-            <div class="cardback-group" style="
-                padding: 15px;
-                border-radius: 5px;
-                margin-bottom: 20px;
-            ">
-                <label for="card-back-art" style="display:block; margin-bottom:8px;"><strong>Card Back Art (any image format):</strong></label>
-                <div style="gap: 10px; align-items: center;">
-                    <input type="file" accept="image/*" name="card-back-art" id="card-back-art" style="flex-grow: 1;">
-                    <button type="submit" style="padding: 10px 10px;">Upload</button>
+            <form class="setup-form">
+                <div style="margin-bottom: 15px;">
+                    <label for="num-decks" style="display:block; margin-bottom:5px;">Number of Decks:</label>
+                    <select name="num-decks" id="num-decks" style="width: 50%; padding: 5px;">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                    </select>
                 </div>
-            </div>
 
-            <div class="cardface-group" style="
-                padding: 1px;
-                border-radius: 5px;
-                margin-bottom: 20px;
-                align-items: center;
-                box-sizing: border-box;
-            ">
-                <label for="card-back-color" style="display:block; margin-bottom:8px;"><strong>Card Face Background Color:</strong></label>
-                <div style="display:block; gap: 10px; align-items: center;">
-                    <label for="colorPicker">Select a color:</label>
-                    <input type="color" id="colorPicker" name="colorPicker" value="#ff0000">
-                    <button id="chooseBtn">CHOOSE</button>
+                <!-- Deck 1 Configuration -->
+                <div id="deck-setup-1">
+                <p style="border-top: 1px solid #888; padding-top: 10pt; font-size: 20px;"><em>Configure the deck 1</em></p> <!--Make this a different font-->
+
+                <div class="name-group" style="margin-bottom: 15px;">
+                    <label for="deck1-name" style="display:block; margin-bottom:5px;">Deck Name:</label>
+                    <input name="deck1-name" id="deck1-name" style="width: 50%; padding: 5px; box-sizing:border-box;" placeholder="Stock Alerts">
                 </div>
-            </div>
-            </div>
 
-            <!-- Deck 2 Configuration -->
-            <div id="deck-setup-2">
-            <p style="border-top: 1px solid #888; padding-top: 10pt; font-size: 20px;"><em>Configure the deck 2</em></p> <!--Make this a different font-->
-            <div class="name-group" style="margin-bottom: 15px;">
-                <label for="deck1-name" style="display:block; margin-bottom:5px;">Deck Name:</label>
-                <input name="deck1-name" id="deck1-name" style="width: 50%; padding: 5px; box-sizing:border-box;" placeholder="World Events">
-            </div>
-
-            <!-- Improved File Upload Section -->
-            <div class="cardback-group" style="
-                padding: 15px;
-                border-radius: 5px;
-                margin-bottom: 20px;
-            ">
-                <label for="card-back-art" style="display:block; margin-bottom:8px;"><strong>Card Back Art (any image format):</strong></label>
-                <div style="gap: 10px; align-items: center;">
-                    <input type="file" accept="image/*" name="card-back-art" id="card-back-art" style="flex-grow: 1;">
-                    <button type="submit" style="padding: 10px 10px;">Upload</button>
+                <!-- Improved File Upload Section -->
+                <div class="cardback-group" style="
+                    padding: 15px;
+                    border-radius: 5px;
+                    margin-bottom: 20px;
+                ">
+                    <label for="deck1-card-back-art" style="display:block; margin-bottom:8px;"><strong>Card Back Art (any image format):</strong></label>
+                    <div style="gap: 10px; align-items: center;">
+                        <input type="file" accept="image/*" name="deck1-card-back-art" id="deck1-card-back-art" style="flex-grow: 1;">
+                        <button type="submit" style="padding: 10px 10px;">Upload</button>
+                    </div>
                 </div>
-            </div>
 
-            <div class="cardface-group" style="
-                padding: 1px;
-                border-radius: 5px;
-                margin-bottom: 20px;
-                align-items: center;
-                box-sizing: border-box;
-            ">
-                <label for="card-back-color" style="display:block; margin-bottom:8px;"><strong>Card Face Background Color:</strong></label>
-                <div style="display:block; gap: 10px; align-items: center;">
-                    <label for="colorPicker">Select a color:</label>
-                    <input type="color" id="colorPicker" name="colorPicker" value="#ff0000">
-                    <button id="chooseBtn">CHOOSE</button>
+                <div class="cardface-group" style="
+                    padding: 1px;
+                    border-radius: 5px;
+                    margin-bottom: 20px;
+                    align-items: center;
+                    box-sizing: border-box;
+                ">
+                    <label for="deck1-card-face" style="display:block; margin-bottom:8px;"><strong>Card Face Background Color:</strong></label>
+                    <div style="display:block; gap: 10px; align-items: center;">
+                        <label for="colorPicker">Select a color:</label>
+                        <input type="color" id="colorPicker" name="colorPicker" value="#ff0000">
+                        <button id="chooseBtn">CHOOSE</button>
+                    </div>
                 </div>
-            </div>
-            </div>
 
-            <!-- Deck 3 Configuration -->
-            <div id="deck-setup-3">
-            <p style="border-top: 1px solid #888; padding-top: 10pt; font-size: 20px;"><em>Configure the deck 3</em></p> <!--Make this a different font-->
-            <div class="name-group" style="margin-bottom: 15px;">
-                <label for="deck1-name" style="display:block; margin-bottom:5px;">Deck Name:</label>
-                <input name="deck1-name" id="deck1-name" style="width: 50%; padding: 5px; box-sizing:border-box;" placeholder="Monster Cards">
-            </div>
+                <div id="deck-builder-container" style="max-height: 400px; overflow-y: auto; padding: 10px;">
+                    <div id="card-list">
+                        <!-- Dynamically generated card inputs will go here -->
+                    </div>
 
-            <!-- Improved File Upload Section -->
-            <div class="cardback-group" style="
-                padding: 15px;
-                border-radius: 5px;
-                margin-bottom: 20px;
-            ">
-                <label for="card-back-art" style="display:block; margin-bottom:8px;"><strong>Card Back Art (any image format):</strong></label>
-                <div style="gap: 10px; align-items: center;">
-                    <input type="file" accept="image/*" name="card-back-art" id="card-back-art" style="flex-grow: 1;">
-                    <button type="submit" style="padding: 10px 10px;">Upload</button>
+                    <button type="button" onclick="addNewCardRow()" style="margin-top: 10px;">
+                        + Add Card
+                    </button> <!--button to add a card to the creation list-->
                 </div>
-            </div>
 
-            <div class="cardface-group" style="
-                padding: 1px;
-                border-radius: 5px;
-                margin-bottom: 20px;
-                align-items: center;
-                box-sizing: border-box;
-            ">
-                <label for="card-back-color" style="display:block; margin-bottom:8px;"><strong>Card Face Background Color:</strong></label>
-                <div style="display:block; gap: 10px; align-items: center;">
-                    <label for="colorPicker">Select a color:</label>
-                    <input type="color" id="colorPicker" name="colorPicker" value="#ff0000">
-                    <button id="chooseBtn">CHOOSE</button>
+                <!--Template for a single card row-->
+                <template id="card-row-template">
+                    <div class="card-entry" style="display: flex; gap: 10px; margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 10px">
+                        <span class="card-number" style="font-weight: bold; min-width: 25px;">1.</span>
+                        <div style="flex-grow: 1;">
+                            <input type="text" placeholder="Card Title" style="width: 100%; margin-bottom: 5px;">
+                            <textarea class="card-description" placeholder="Card Description" style="width: 100%; height: 50px;">
+                            </textarea>
+                        </div>
+                    <button type="button" onclick="this.parentElement.remove(); updateNumbers();" style="color: red;">×</button>
+                    </div>
+                </template>
                 </div>
-            </div>
-            </div>
 
-            <!-- Deck 4 Configuration -->
-            <div id="deck-setup-4">
-            <p style="border-top: 1px solid #888; padding-top: 10pt; font-size: 20px;"><em>Configure the deck 4</em></p> <!--Make this a different font-->
-            <div class="name-group" style="margin-bottom: 15px;">
-                <label for="deck1-name" style="display:block; margin-bottom:5px;">Deck Name:</label>
-                <input name="deck1-name" id="deck1-name" style="width: 50%; padding: 5px; box-sizing:border-box;" placeholder="Noisy Cards">
-            </div>
-
-            <!-- Improved File Upload Section -->
-            <div class="cardback-group" style="
-                padding: 15px;
-                border-radius: 5px;
-                margin-bottom: 20px;
-            ">
-                <label for="card-back-art" style="display:block; margin-bottom:8px;"><strong>Card Back Art (any image format):</strong></label>
-                <div style="gap: 10px; align-items: center;">
-                    <input type="file" accept="image/*" name="card-back-art" id="card-back-art" style="flex-grow: 1;">
-                    <button type="submit" style="padding: 10px 10px;">Upload</button>
+                <!-- Deck 2 Configuration -->
+                <div id="deck-setup-2">
+                <p style="border-top: 1px solid #888; padding-top: 10pt; font-size: 20px;"><em>Configure the deck 2</em></p> <!--Make this a different font-->
+                <div class="name-group" style="margin-bottom: 15px;">
+                    <label for="deck2-name" style="display:block; margin-bottom:5px;">Deck Name:</label>
+                    <input name="deck2-name" id="deck2-name" style="width: 50%; padding: 5px; box-sizing:border-box;" placeholder="World Events">
                 </div>
-            </div>
 
-            <div class="cardface-group" style="
-                padding: 1px;
-                border-radius: 5px;
-                margin-bottom: 20px;
-                align-items: center;
-                box-sizing: border-box;
-            ">
-                <label for="card-back-color" style="display:block; margin-bottom:8px;"><strong>Card Face Background Color:</strong></label>
-                <div style="display:block; gap: 10px; align-items: center;">
-                    <label for="colorPicker">Select a color:</label>
-                    <input type="color" id="colorPicker" name="colorPicker" value="#ff0000">
-                    <button id="chooseBtn">CHOOSE</button>
+                <!-- Improved File Upload Section -->
+                <div class="cardback-group" style="
+                    padding: 15px;
+                    border-radius: 5px;
+                    margin-bottom: 20px;
+                ">
+                    <label for="card-back-art" style="display:block; margin-bottom:8px;"><strong>Card Back Art (any image format):</strong></label>
+                    <div style="gap: 10px; align-items: center;">
+                        <input type="file" accept="image/*" name="deck2-card-back-art" id="deck2-card-back-art" style="flex-grow: 1;">
+                        <button type="submit" style="padding: 10px 10px;">Upload</button>
+                    </div>
                 </div>
-            </div>
-            </div>
 
-            <p style="border-top: 1px solid #888; padding-top: 10pt;"></p>
-            <div style="display: block; justify-content: space-between; gap: 10px;">
-                <button type="submit" class="submit-fullsize" style="padding: 10px; flex-grow: 1;"><strong>Submit</strong></button>
-                <button type="button" class="cancel-fullsize" onclick="closeSetupModal()" style="padding: 10px; background-color: #636363;">Cancel</button>
-            </div>
+                <div class="cardface-group" style="
+                    padding: 1px;
+                    border-radius: 5px;
+                    margin-bottom: 20px;
+                    align-items: center;
+                    box-sizing: border-box;
+                ">
+                    <label for="deck2-card-face" style="display:block; margin-bottom:8px;"><strong>Card Face Background Color:</strong></label>
+                    <div style="display:block; gap: 10px; align-items: center;">
+                        <label for="colorPicker">Select a color:</label>
+                        <input type="color" id="colorPicker" name="colorPicker" value="#ff0000">
+                        <button id="chooseBtn">CHOOSE</button>
+                    </div>
+                </div>
+                </div>
+
+                <!-- Deck 3 Configuration -->
+                <div id="deck-setup-3">
+                <p style="border-top: 1px solid #888; padding-top: 10pt; font-size: 20px;"><em>Configure the deck 3</em></p> <!--Make this a different font-->
+                <div class="name-group" style="margin-bottom: 15px;">
+                    <label for="deck3-name" style="display:block; margin-bottom:5px;">Deck Name:</label>
+                    <input name="deck3-name" id="deck3-name" style="width: 50%; padding: 5px; box-sizing:border-box;" placeholder="Monster Cards">
+                </div>
+
+                <!-- Improved File Upload Section -->
+                <div class="cardback-group" style="
+                    padding: 15px;
+                    border-radius: 5px;
+                    margin-bottom: 20px;
+                ">
+                    <label for="deck3-card-back-art" style="display:block; margin-bottom:8px;"><strong>Card Back Art (any image format):</strong></label>
+                    <div style="gap: 10px; align-items: center;">
+                        <input type="file" accept="image/*" name="deck3-card-back-art" id="deck3-card-back-art" style="flex-grow: 1;">
+                        <button type="submit" style="padding: 10px 10px;">Upload</button>
+                    </div>
+                </div>
+
+                <div class="cardface-group" style="
+                    padding: 1px;
+                    border-radius: 5px;
+                    margin-bottom: 20px;
+                    align-items: center;
+                    box-sizing: border-box;
+                ">
+                    <label for="deck3-card-face" style="display:block; margin-bottom:8px;"><strong>Card Face Background Color:</strong></label>
+                    <div style="display:block; gap: 10px; align-items: center;">
+                        <label for="colorPicker">Select a color:</label>
+                        <input type="color" id="colorPicker" name="colorPicker" value="#ff0000">
+                        <button id="chooseBtn">CHOOSE</button>
+                    </div>
+                </div>
+                </div>
+
+                <!-- Deck 4 Configuration -->
+                <div id="deck-setup-4">
+                <p style="border-top: 1px solid #888; padding-top: 10pt; font-size: 20px;"><em>Configure the deck 4</em></p> <!--Make this a different font-->
+                <div class="name-group" style="margin-bottom: 15px;">
+                    <label for="deck4-name" style="display:block; margin-bottom:5px;">Deck Name:</label>
+                    <input name="deck4-name" id="deck4-name" style="width: 50%; padding: 5px; box-sizing:border-box;" placeholder="Noisy Cards">
+                </div>
+
+                <!-- Improved File Upload Section -->
+                <div class="cardback-group" style="
+                    padding: 15px;
+                    border-radius: 5px;
+                    margin-bottom: 20px;
+                ">
+                    <label for="deck4-card-back-art" style="display:block; margin-bottom:8px;"><strong>Card Back Art (any image format):</strong></label>
+                    <div style="gap: 10px; align-items: center;">
+                        <input type="file" accept="image/*" name="deck4-card-back-art" id="deck4-card-back-art" style="flex-grow: 1;">
+                        <button type="submit" style="padding: 10px 10px;">Upload</button>
+                    </div>
+                </div>
+
+                <div class="cardface-group" style="
+                    padding: 1px;
+                    border-radius: 5px;
+                    margin-bottom: 20px;
+                    align-items: center;
+                    box-sizing: border-box;
+                ">
+                    <label for="deck4-card-face" style="display:block; margin-bottom:8px;"><strong>Card Face Background Color:</strong></label>
+                    <div style="display:block; gap: 10px; align-items: center;">
+                        <label for="colorPicker">Select a color:</label>
+                        <input type="color" id="colorPicker" name="colorPicker" value="#ff0000">
+                        <button id="chooseBtn">CHOOSE</button>
+                    </div>
+                </div>
+                </div>
+
+                <p style="border-top: 1px solid #888; padding-top: 10pt;"></p>
+                <div style="display: block; justify-content: space-between; gap: 10px;">
+                    <button type="submit" class="submit-fullsize" style="padding: 10px; flex-grow: 1;"><strong>Submit</strong></button>
+                    <button type="button" class="cancel-fullsize" onclick="closeSetupModal()" style="padding: 10px; background-color: #636363;">Cancel</button>
+                </div>
+            </form>
         </div>
     </div>
 
-    <!--Master JS logic to control the modal and its various functions-->
+    <!--JS logic to control the modal and its various functions (user-facing only)-->
     <script>
+    // logic to add new card rows and control card input fields for each deck setup section
+    function addNewCardRow() {
+        const container = document.getElementById('card-list');
+        const template = document.getElementById('card-row-template');
+        const clone = template.content.cloneNode(true);
+
+        container.appendChild(clone);
+        updateNumbers();
+    }
+
+    function updateNumbers() {
+        const rows = document.querySelectorAll('.card-entry');
+        rows.forEach((row, index) => {
+            row.querySelector('.card-number').innerText = `${index + 1}.`;
+        });
+    }
+
+    function collectDeckData() {
+        const rows = document.querySelectorAll('.card-entry');
+        const deck = Array.from(rows).map(row => ({
+            title: row.querySelector('.card-title').value,
+            description: row.querySelector('.card-desc').value
+        }));
+        
+        console.log("Collected Deck:", deck);
+        return deck;
+    }
+
     function launchSetupModal() {
         document.getElementById('modalContainer').style.display = 'block';
     }

@@ -2,6 +2,36 @@
 // and have as many decks as you desire. However with this first version, you may need to do some alignment
 // modifications in the index.html and style.css with more than 2 decks.
 
+// capture and save form data from the modal
+const setupForm = document.getElementById('setup-form');
+setupForm.addEventListener('submit', (event) => {
+    event.preventDefault(); // prevent standard submission
+
+    const formData = {
+        // get form data and save into objects (deck 1 is mandatory)
+        numDecks: parseInt(document.getElementById('num-decks').value, 10),
+        deck1Name: document.getElementById('deck1-name').value,
+        deck1Art: document.getElementById('deck1-card-back-art').files[0],
+        deck1FaceColor: document.getElementById('deck1-card-face').value,
+
+        // optional form data for additional decks; if numDecks is less than 4, these will be ignored
+        deck2Name: document.getElementById('deck2-name')?.value || "",
+        deck2Art: document.getElementById('deck2-card-back-art')?.files[0]  || "",
+        deck2FaceColor: document.getElementById('deck2-card-face')?.value || "",
+
+        deck3Name: document.getElementById('deck3-name')?.value || "",
+        deck3Art: document.getElementById('deck3-card-back-art')?.files[0] || "",
+        deck3FaceColor: document.getElementById('deck3-card-face')?.value || "",
+
+        deck4Name: document.getElementById('deck4-name')?.value || "",
+        deck4Art: document.getElementById('deck4-card-back-art')?.files[0] || "",
+        deck4FaceColor: document.getElementById('deck4-card-face')?.value || "",
+    };
+
+    // store the data in LocalStorage
+    localStorage.setImte('deckConfig', JSON.stringify(formData));
+    alert("Deck configuration saved!")
+
 const originalDeck1 = Object.freeze([
     { title: "SEC Investigation Halted", description: "LACK of Evidence: Keep this card - Good for ONE exit out of Frozen Assets." },
     { title: "SEC Investigation Halted", description: "LACK of Evidence: Keep this card - Good for ONE exit out of Frozen Assets." },
