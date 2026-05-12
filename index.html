@@ -22,7 +22,7 @@
     <p>To shuffle the deck, click the 'Shuffle Deck' button for the corresponding deck. When you do, the 'Drawn Cards' value will be reset, but the total number of cards in the deck will stay the same. When the deck is empty, click the 'Reset Deck' button and then the 'Shuffle Deck' button.</p>
     <hr>
     
-    <button onclick="launchSetupModal()" style="font-size: 22px;">Setup Decks</button>
+    <button onclick="launchSetupModal(); localStorage.setItem('isModalOpen', 'true'); // stores the modal's state to prevent clearing on reload" style="font-size: 22px;">Setup Decks</button>
     <!--Modal overlay-->
     <div id="modalContainer" style="display:none; flex-direction: column; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); overflow-y: auto; backdrop-filter: blur(3px); font-family: 'Inter', sans-serif; z-index: 1000;">
         <!--Modal content-->
@@ -59,7 +59,7 @@
 
                 <!-- Deck 1 Configuration -->
                 <div id="deck-setup-1">
-                <p style="border-top: 1px solid #888; padding-top: 10pt; font-size: 20px;"><em>Configure the deck 1</em></p> <!--Make this a different font-->
+                <h2 style="border-top: 1px solid #888; padding-top: 10pt; font-size: 20px;"><em>Configure the deck 1</em></h2> <!--Make this a different font-->
 
                 <div class="name-group" style="margin-bottom: 15px;">
                     <label for="deck1-name" style="display:block; margin-bottom:5px;">Deck Name:</label>
@@ -94,6 +94,8 @@
                     </div>
                 </div>
 
+                <h3>Set Individual Card Details</h3>
+
                 <div id="deck-builder-container" style="max-height: 400px; overflow-y: auto; padding: 10px;">
                     <div id="card-list">
                         <!-- Dynamically generated card inputs will go here -->
@@ -102,6 +104,10 @@
                     <button type="button" onclick="addNewCardRow()" style="margin-top: 10px;">
                         + Add Card
                     </button> <!--button to add a card to the creation list-->
+
+                    <button type="submit-card-details" style="margin-top: 10px;">
+                        Save Details
+                    </button> <!--saves card details to localStorage-->
                 </div>
 
                 <!--Template for a single card row-->
@@ -109,11 +115,10 @@
                     <div class="card-entry" style="display: flex; gap: 10px; margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 10px">
                         <span class="card-number" style="font-weight: bold; min-width: 25px;">1.</span>
                         <div style="flex-grow: 1;">
-                            <input type="text" placeholder="Card Title" style="width: 100%; margin-bottom: 5px;">
-                            <textarea class="card-description" placeholder="Card Description" style="width: 100%; height: 50px;">
-                            </textarea>
+                            <input type="text" placeholder="Card Title" id="card-title" style="width: 100%; margin-bottom: 5px;">
+                            <textarea class="card-description" id="card-description" onclick="this.addEventListener('mousedown', function(e) {setTimeout(() => {const end = this.value.length; this.setSelectionRange(end, end); this.focus();}, 0); });" placeholder="Card Description" style="width: 100%; height: 50px;"></textarea>
                         </div>
-                    <button type="button" onclick="this.parentElement.remove(); updateNumbers();" style="color: red;">×</button>
+                    <button type="button" onclick="this.parentElement.remove(); updateNumbers();" style="color: rgb(255, 255, 255);"><i class="fa-solid fa-xmark"></i></button>
                     </div>
                 </template>
                 </div>

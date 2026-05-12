@@ -4,6 +4,27 @@
 
 // capture and save form data from the modal
 const setupForm = document.getElementById('setup-form');
+const cardDescription = document.getElementById('card-description');
+const cardTitle = document.getElementById('card-title');
+const saveBtn = document.getElementById('submit-card-details');
+
+// saves card title and description
+saveBtn.addEventListener('click', () => {
+    const title = cardTitle.value.trim();
+    const description = cardDescription.value.trim();
+    localStorage.setItem('newCard', JSON.stringify({ title, description })); // save the complete card details to localStorage
+});
+
+// load from localStorage on page refresh
+window.addEventListener('load', () => {
+    const savedCard = JSON.parse(localStorage.getItem('newCard'));
+    if (savedCard) {
+        cardTitle.value = savedCard.title;
+        cardDescription.value = savedCard.description;
+    }
+});
+
+// saves all other details about the card deck
 setupForm.addEventListener('submit', (event) => {
     event.preventDefault(); // prevent standard submission
 
@@ -29,7 +50,7 @@ setupForm.addEventListener('submit', (event) => {
     };
 
     // store the data in LocalStorage
-    localStorage.setImte('deckConfig', JSON.stringify(formData));
+    localStorage.setItem('deckConfig', JSON.stringify(formData));
     alert("Deck configuration saved!")
 
 const originalDeck1 = Object.freeze([
