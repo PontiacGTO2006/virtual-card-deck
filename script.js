@@ -1,57 +1,21 @@
-// Here is where you customize the cards to fit your needs; you can add as many as you want per deck,
-// and have as many decks as you desire. However with this first version, you may need to do some alignment
-// modifications in the index.html and style.css with more than 2 decks.
+// MODAL FUNCTIONS: manages the persistence of the modal state across page reloads using localStorage
+function launchSetupModal() {
+    const modal = document.getElementById('modalContainer');
+    modal.style.display = 'flex';
+    // Save modal state to localStorage
+    localStorage.setItem('modalOpen', 'true');
+}
 
-// capture and save form data from the modal
-const setupForm = document.getElementById('setup-form');
-const cardDescription = document.getElementById('card-description');
-const cardTitle = document.getElementById('card-title');
-const saveBtn = document.getElementById('submit-card-details');
+// Consider creating a 'soft' version of this function that doesn't clear the local storage, for the red X in the corner for example
+function closeSetupModal() {
+    const modal = document.getElementById('modalContainer');
+    modal.style.display = 'none';
+    // Save modal state to localStorage
+    localStorage.setItem('modalOpen', 'false');
+    localStorage.clear(); // clear local storage when user definitively backs out of the modal with the Cancel button only
+}
 
-// saves card title and description
-saveBtn.addEventListener('click', () => {
-    const title = cardTitle.value.trim();
-    const description = cardDescription.value.trim();
-    localStorage.setItem('newCard', JSON.stringify({ title, description })); // save the complete card details to localStorage
-});
-
-// load from localStorage on page refresh
-window.addEventListener('load', () => {
-    const savedCard = JSON.parse(localStorage.getItem('newCard'));
-    if (savedCard) {
-        cardTitle.value = savedCard.title;
-        cardDescription.value = savedCard.description;
-    }
-});
-
-// saves all other details about the card deck
-setupForm.addEventListener('submit', (event) => {
-    event.preventDefault(); // prevent standard submission
-
-    const formData = {
-        // get form data and save into objects (deck 1 is mandatory)
-        numDecks: parseInt(document.getElementById('num-decks').value, 10),
-        deck1Name: document.getElementById('deck1-name').value,
-        deck1Art: document.getElementById('deck1-card-back-art').files[0],
-        deck1FaceColor: document.getElementById('deck1-card-face').value,
-
-        // optional form data for additional decks; if numDecks is less than 4, these will be ignored
-        deck2Name: document.getElementById('deck2-name')?.value || "",
-        deck2Art: document.getElementById('deck2-card-back-art')?.files[0]  || "",
-        deck2FaceColor: document.getElementById('deck2-card-face')?.value || "",
-
-        deck3Name: document.getElementById('deck3-name')?.value || "",
-        deck3Art: document.getElementById('deck3-card-back-art')?.files[0] || "",
-        deck3FaceColor: document.getElementById('deck3-card-face')?.value || "",
-
-        deck4Name: document.getElementById('deck4-name')?.value || "",
-        deck4Art: document.getElementById('deck4-card-back-art')?.files[0] || "",
-        deck4FaceColor: document.getElementById('deck4-card-face')?.value || "",
-    };
-
-    // store the data in LocalStorage
-    localStorage.setItem('deckConfig', JSON.stringify(formData));
-    alert("Deck configuration saved!")
+// DECK DATA: holdover from the first version, this is currently still hard-coded
 
 const originalDeck1 = Object.freeze([
     { title: "SEC Investigation Halted", description: "LACK of Evidence: Keep this card - Good for ONE exit out of Frozen Assets." },
@@ -174,12 +138,13 @@ const originalDeck2 = Object.freeze([
     { title: "Nuclear Accident", description: "Nuclear testing in Russia goes wrong when a missile impacts a FIMC data center. FIMC down 1 coin." }
 ]);
 
+// deck state management
 let decks = {
     1: { cards: [...originalDeck1], drawnCards: 0, drawnCard: null },
     2: { cards: [...originalDeck2], drawnCards: 0, drawnCard: null }
 };
 
-// Function to update card counters
+// deck management functions (largely holdovers from v1)
 function updateCounter(deckNum) {
     document.getElementById(`total-cards-${deckNum}`).innerText = decks[deckNum].cards.length;
     document.getElementById(`drawn-cards-${deckNum}`).innerText = decks[deckNum].drawnCards;
@@ -283,24 +248,93 @@ function loadDeckState(deckNum) {
     }
 }
 
-// told the file to be rendered
-const input = document.getElementById('card-back-art')
-input.addEventListener('change', (event) => {
-    const files = event.target.files;
-    container=innerHTML = '';
+// Initialize the modal (DOM-ready)
 
-    Array.from(files).forEach(file => {
-        const reader = new FileReader();
-        reader.onload = (e) => {
-            const cardData = e.target.result;
-            renderDeck(cardData)
-        };
+document.addEventListener('DOMContentLoaded', () => {
+    // Restore modal state on page reload
+    const modalOpen = localStorage.getItem('modalOpen');
+    if (modalOpen === 'true') {
+        const modal = document.getElementById('modalContainer');
+        modal.style.display = 'flex';
+    }
 
-        reader.readAsDataURL(file);
-    });
+    // Setup form handling
+    const setupForm = document.getElementById('setup-form');
+    if (setupForm) {
+        setupForm.addEventListener('submit', (event) => {
+            event.preventDefault();
+
+            const formData = {
+                numDecks: parseInt(document.getElementById('num-decks').value, 10),
+                deck1Name: document.getElementById('deck1-name').value,
+                deck1Art: document.getElementById('deck1-card-back-art').files[0],
+                deck1FaceColor: document.getElementById('colorPicker-1').value,
+
+                deck2Name: document.getElementById('deck2-name')?.value || "",
+                deck2Art: document.getElementById('deck2-card-back-art')?.files[0] || "",
+                deck2FaceColor: document.getElementById('colorPicker-2').value || "#ff0000",
+
+                deck3Name: document.getElementById('deck3-name')?.value || "",
+                deck3Art: document.getElementById('deck3-card-back-art')?.files[0] || "",
+                deck3FaceColor: document.getElementById('colorPicker-3').value || "#ff0000",
+
+                deck4Name: document.getElementById('deck4-name')?.value || "",
+                deck4Art: document.getElementById('deck4-card-back-art')?.files[0] || "",
+                deck4FaceColor: document.getElementById('colorPicker-4').value || "#ff0000",
+            };
+
+            localStorage.setItem('deckConfig', JSON.stringify(formData));
+            alert("Deck configuration saved!");
+            closeSetupModal();
+        });
+    }
+
+    // Card details form handling (title and description)
+    const saveBtn = document.getElementById('submit-card-details');
+
+    if (saveBtn) {
+        saveBtn.addEventListener('click', () => {
+            // Collect all card entries from the template
+            const rows = document.querySelectorAll('.card-entry');
+            const cards = Array.from(rows).map(row => ({
+                title: row.querySelector('input[placeholder="Card Title"]')?.value.trim() || "",
+                description: row.querySelector('textarea[placeholder="Card Description"]')?.value.trim() || ""
+            }));
+            
+            // Filter out empty cards
+            const validCards = cards.filter(card => card.title || card.description);
+            
+            if (validCards.length > 0) {
+                localStorage.setItem('customCards', JSON.stringify(validCards));
+                console.log("Card details saved:", validCards);
+            }
+        });
+    }
+
+    // Card back art file upload
+    const input = document.getElementById('card-back-art');
+    if (input) {
+        input.addEventListener('change', (event) => {
+            const files = event.target.files;
+            const container = document.getElementById('card-preview-container');
+            if (container) {
+                container.innerHTML = '';
+
+                Array.from(files).forEach(file => {
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        const cardData = e.target.result;
+                        renderDeck(cardData);
+                    };
+                    reader.readAsDataURL(file);
+                });
+            }
+        });
+    }
+
+    // Load deck states and render decks
+    loadDeckState(1);
+    loadDeckState(2);
+    renderDeck(1);
+    renderDeck(2);
 });
-
-loadDeckState(1);
-loadDeckState(2);
-renderDeck(1);
-renderDeck(2);

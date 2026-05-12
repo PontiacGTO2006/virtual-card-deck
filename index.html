@@ -22,7 +22,7 @@
     <p>To shuffle the deck, click the 'Shuffle Deck' button for the corresponding deck. When you do, the 'Drawn Cards' value will be reset, but the total number of cards in the deck will stay the same. When the deck is empty, click the 'Reset Deck' button and then the 'Shuffle Deck' button.</p>
     <hr>
     
-    <button onclick="launchSetupModal(); localStorage.setItem('isModalOpen', 'true'); // stores the modal's state to prevent clearing on reload" style="font-size: 22px;">Setup Decks</button>
+    <button onclick="launchSetupModal();" style="font-size: 22px;">Setup Decks</button>
     <!--Modal overlay-->
     <div id="modalContainer" style="display:none; flex-direction: column; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); overflow-y: auto; backdrop-filter: blur(3px); font-family: 'Inter', sans-serif; z-index: 1000;">
         <!--Modal content-->
@@ -46,7 +46,7 @@
             <button type="small-close-btn" class="close-btn" style="position: absolute;" onclick="closeSetupModal()">
                 <i class="fa-solid fa-xmark"></i>
             </button>
-            <form class="setup-form">
+            <form class="setup-form" id="setup-form">
                 <div style="margin-bottom: 15px;">
                     <label for="num-decks" style="display:block; margin-bottom:5px;">Number of Decks:</label>
                     <select name="num-decks" id="num-decks" style="width: 50%; padding: 5px;">
@@ -75,7 +75,7 @@
                     <label for="deck1-card-back-art" style="display:block; margin-bottom:8px;"><strong>Card Back Art (any image format):</strong></label>
                     <div style="gap: 10px; align-items: center;">
                         <input type="file" accept="image/*" name="deck1-card-back-art" id="deck1-card-back-art" style="flex-grow: 1;">
-                        <button type="submit" style="padding: 10px 10px;">Upload</button>
+                        <button type="button" style="padding: 10px 10px;">Upload</button>
                     </div>
                 </div>
 
@@ -88,30 +88,30 @@
                 ">
                     <label for="deck1-card-face" style="display:block; margin-bottom:8px;"><strong>Card Face Background Color:</strong></label>
                     <div style="display:block; gap: 10px; align-items: center;">
-                        <label for="colorPicker">Select a color:</label>
-                        <input type="color" id="colorPicker" name="colorPicker" value="#ff0000">
-                        <button id="chooseBtn">CHOOSE</button>
+                        <label for="colorPicker-1">Select a color:</label>
+                        <input type="color" id="colorPicker-1" name="colorPicker-1" value="#ff0000">
+                        <button type="button" class="chooseBtn" data-deck="1">CHOOSE</button>
                     </div>
                 </div>
 
                 <h3>Set Individual Card Details</h3>
 
                 <div id="deck-builder-container" style="max-height: 400px; overflow-y: auto; padding: 10px;">
-                    <div id="card-list">
+                    <div id="card-list-1">
                         <!-- Dynamically generated card inputs will go here -->
                     </div>
 
-                    <button type="button" onclick="addNewCardRow()" style="margin-top: 10px;">
+                    <button type="button" onclick="addNewCardRow1()" style="margin-top: 10px;">
                         + Add Card
                     </button> <!--button to add a card to the creation list-->
 
-                    <button type="submit-card-details" style="margin-top: 10px;">
+                    <button type="button" id="submit-card-details" style="margin-top: 10px;">
                         Save Details
                     </button> <!--saves card details to localStorage-->
                 </div>
 
                 <!--Template for a single card row-->
-                <template id="card-row-template">
+                <template id="card-row-template-1">
                     <div class="card-entry" style="display: flex; gap: 10px; margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 10px">
                         <span class="card-number" style="font-weight: bold; min-width: 25px;">1.</span>
                         <div style="flex-grow: 1;">
@@ -125,7 +125,7 @@
 
                 <!-- Deck 2 Configuration -->
                 <div id="deck-setup-2">
-                <p style="border-top: 1px solid #888; padding-top: 10pt; font-size: 20px;"><em>Configure the deck 2</em></p> <!--Make this a different font-->
+                <h2 style="border-top: 1px solid #888; padding-top: 10pt; font-size: 20px;"><em>Configure the deck 2</em></h2> <!--Make this a different font-->
                 <div class="name-group" style="margin-bottom: 15px;">
                     <label for="deck2-name" style="display:block; margin-bottom:5px;">Deck Name:</label>
                     <input name="deck2-name" id="deck2-name" style="width: 50%; padding: 5px; box-sizing:border-box;" placeholder="World Events">
@@ -140,7 +140,7 @@
                     <label for="card-back-art" style="display:block; margin-bottom:8px;"><strong>Card Back Art (any image format):</strong></label>
                     <div style="gap: 10px; align-items: center;">
                         <input type="file" accept="image/*" name="deck2-card-back-art" id="deck2-card-back-art" style="flex-grow: 1;">
-                        <button type="submit" style="padding: 10px 10px;">Upload</button>
+                        <button type="button" style="padding: 10px 10px;">Upload</button>
                     </div>
                 </div>
 
@@ -153,16 +153,44 @@
                 ">
                     <label for="deck2-card-face" style="display:block; margin-bottom:8px;"><strong>Card Face Background Color:</strong></label>
                     <div style="display:block; gap: 10px; align-items: center;">
-                        <label for="colorPicker">Select a color:</label>
-                        <input type="color" id="colorPicker" name="colorPicker" value="#ff0000">
-                        <button id="chooseBtn">CHOOSE</button>
+                        <label for="colorPicker-2">Select a color:</label>
+                        <input type="color" id="colorPicker-2" name="colorPicker-2" value="#ff0000">
+                        <button type="button" class="chooseBtn" data-deck="2">CHOOSE</button>
                     </div>
                 </div>
+
+                <h3>Set Individual Card Details</h3>
+
+                <div id="deck-builder-container" style="max-height: 400px; overflow-y: auto; padding: 10px;">
+                    <div id="card-list-2">
+                        <!-- Dynamically generated card inputs will go here -->
+                    </div>
+
+                    <button type="button" onclick="addNewCardRow2()" style="margin-top: 10px;">
+                        + Add Card
+                    </button> <!--button to add a card to the creation list-->
+
+                    <button type="button" id="submit-card-details" style="margin-top: 10px;">
+                        Save Details
+                    </button> <!--saves card details to localStorage-->
+                </div>
+
+                <!--Template for a single card row-->
+                <template id="card-row-template-2">
+                    <div class="card-entry" style="display: flex; gap: 10px; margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 10px">
+                        <span class="card-number" style="font-weight: bold; min-width: 25px;">1.</span>
+                        <div style="flex-grow: 1;">
+                            <input type="text" placeholder="Card Title" id="card-title" style="width: 100%; margin-bottom: 5px;">
+                            <textarea class="card-description" id="card-description" onclick="this.addEventListener('mousedown', function(e) {setTimeout(() => {const end = this.value.length; this.setSelectionRange(end, end); this.focus();}, 0); });" placeholder="Card Description" style="width: 100%; height: 50px;"></textarea>
+                        </div>
+                    <button type="button" onclick="this.parentElement.remove(); updateNumbers();" style="color: rgb(255, 255, 255);"><i class="fa-solid fa-xmark"></i></button>
+                    </div>
+                </template>
                 </div>
 
                 <!-- Deck 3 Configuration -->
                 <div id="deck-setup-3">
-                <p style="border-top: 1px solid #888; padding-top: 10pt; font-size: 20px;"><em>Configure the deck 3</em></p> <!--Make this a different font-->
+                <h2 style="border-top: 1px solid #888; padding-top: 10pt; font-size: 20px;"><em>Configure the deck 3</em></h2>
                 <div class="name-group" style="margin-bottom: 15px;">
                     <label for="deck3-name" style="display:block; margin-bottom:5px;">Deck Name:</label>
                     <input name="deck3-name" id="deck3-name" style="width: 50%; padding: 5px; box-sizing:border-box;" placeholder="Monster Cards">
@@ -177,7 +205,7 @@
                     <label for="deck3-card-back-art" style="display:block; margin-bottom:8px;"><strong>Card Back Art (any image format):</strong></label>
                     <div style="gap: 10px; align-items: center;">
                         <input type="file" accept="image/*" name="deck3-card-back-art" id="deck3-card-back-art" style="flex-grow: 1;">
-                        <button type="submit" style="padding: 10px 10px;">Upload</button>
+                        <button type="button" style="padding: 10px 10px;">Upload</button>
                     </div>
                 </div>
 
@@ -190,16 +218,44 @@
                 ">
                     <label for="deck3-card-face" style="display:block; margin-bottom:8px;"><strong>Card Face Background Color:</strong></label>
                     <div style="display:block; gap: 10px; align-items: center;">
-                        <label for="colorPicker">Select a color:</label>
-                        <input type="color" id="colorPicker" name="colorPicker" value="#ff0000">
-                        <button id="chooseBtn">CHOOSE</button>
+                        <label for="colorPicker-3">Select a color:</label>
+                        <input type="color" id="colorPicker-3" name="colorPicker-3" value="#ff0000">
+                        <button type="button" class="chooseBtn" data-deck="3">CHOOSE</button>
                     </div>
                 </div>
+
+                <h3>Set Individual Card Details</h3>
+
+                <div id="deck-builder-container" style="max-height: 400px; overflow-y: auto; padding: 10px;">
+                    <div id="card-list-3">
+                        <!-- Dynamically generated card inputs will go here -->
+                    </div>
+
+                    <button type="button" onclick="addNewCardRow3()" style="margin-top: 10px;">
+                        + Add Card
+                    </button> <!--button to add a card to the creation list-->
+
+                    <button type="button" id="submit-card-details" style="margin-top: 10px;">
+                        Save Details
+                    </button> <!--saves card details to localStorage-->
+                </div>
+
+                <!--Template for a single card row-->
+                <template id="card-row-template-3">
+                    <div class="card-entry" style="display: flex; gap: 10px; margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 10px">
+                        <span class="card-number" style="font-weight: bold; min-width: 25px;">1.</span>
+                        <div style="flex-grow: 1;">
+                            <input type="text" placeholder="Card Title" id="card-title" style="width: 100%; margin-bottom: 5px;">
+                            <textarea class="card-description" id="card-description" onclick="this.addEventListener('mousedown', function(e) {setTimeout(() => {const end = this.value.length; this.setSelectionRange(end, end); this.focus();}, 0); });" placeholder="Card Description" style="width: 100%; height: 50px;"></textarea>
+                        </div>
+                    <button type="button" onclick="this.parentElement.remove(); updateNumbers();" style="color: rgb(255, 255, 255);"><i class="fa-solid fa-xmark"></i></button>
+                    </div>
+                </template>
                 </div>
 
                 <!-- Deck 4 Configuration -->
                 <div id="deck-setup-4">
-                <p style="border-top: 1px solid #888; padding-top: 10pt; font-size: 20px;"><em>Configure the deck 4</em></p> <!--Make this a different font-->
+                <h2 style="border-top: 1px solid #888; padding-top: 10pt; font-size: 20px;"><em>Configure the deck 4</em></h2>
                 <div class="name-group" style="margin-bottom: 15px;">
                     <label for="deck4-name" style="display:block; margin-bottom:5px;">Deck Name:</label>
                     <input name="deck4-name" id="deck4-name" style="width: 50%; padding: 5px; box-sizing:border-box;" placeholder="Noisy Cards">
@@ -214,7 +270,7 @@
                     <label for="deck4-card-back-art" style="display:block; margin-bottom:8px;"><strong>Card Back Art (any image format):</strong></label>
                     <div style="gap: 10px; align-items: center;">
                         <input type="file" accept="image/*" name="deck4-card-back-art" id="deck4-card-back-art" style="flex-grow: 1;">
-                        <button type="submit" style="padding: 10px 10px;">Upload</button>
+                        <button type="button" style="padding: 10px 10px;">Upload</button>
                     </div>
                 </div>
 
@@ -227,11 +283,39 @@
                 ">
                     <label for="deck4-card-face" style="display:block; margin-bottom:8px;"><strong>Card Face Background Color:</strong></label>
                     <div style="display:block; gap: 10px; align-items: center;">
-                        <label for="colorPicker">Select a color:</label>
-                        <input type="color" id="colorPicker" name="colorPicker" value="#ff0000">
-                        <button id="chooseBtn">CHOOSE</button>
+                        <label for="colorPicker-4">Select a color:</label>
+                        <input type="color" id="colorPicker-4" name="colorPicker-4" value="#ff0000">
+                        <button type="button" class="chooseBtn" data-deck="4">CHOOSE</button>
                     </div>
                 </div>
+
+                <h3>Set Individual Card Details</h3>
+
+                <div id="deck-builder-container" style="max-height: 400px; overflow-y: auto; padding: 10px;">
+                    <div id="card-list-4">
+                        <!-- Dynamically generated card inputs will go here -->
+                    </div>
+
+                    <button type="button" onclick="addNewCardRow4()" style="margin-top: 10px;">
+                        + Add Card
+                    </button> <!--button to add a card to the creation list-->
+
+                    <button type="button" id="submit-card-details" style="margin-top: 10px;">
+                        Save Details
+                    </button> <!--saves card details to localStorage-->
+                </div>
+
+                <!--Template for a single card row-->
+                <template id="card-row-template-4">
+                    <div class="card-entry" style="display: flex; gap: 10px; margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 10px">
+                        <span class="card-number" style="font-weight: bold; min-width: 25px;">1.</span>
+                        <div style="flex-grow: 1;">
+                            <input type="text" placeholder="Card Title" id="card-title" style="width: 100%; margin-bottom: 5px;">
+                            <textarea class="card-description" id="card-description" onclick="this.addEventListener('mousedown', function(e) {setTimeout(() => {const end = this.value.length; this.setSelectionRange(end, end); this.focus();}, 0); });" placeholder="Card Description" style="width: 100%; height: 50px;"></textarea>
+                        </div>
+                    <button type="button" onclick="this.parentElement.remove(); updateNumbers();" style="color: rgb(255, 255, 255);"><i class="fa-solid fa-xmark"></i></button>
+                    </div>
+                </template>
                 </div>
 
                 <p style="border-top: 1px solid #888; padding-top: 10pt;"></p>
@@ -240,15 +324,44 @@
                     <button type="button" class="cancel-fullsize" onclick="closeSetupModal()" style="padding: 10px; background-color: #636363;">Cancel</button>
                 </div>
             </form>
+            <!-- Hidden container for card preview - referenced in script -->
+            <div id="card-preview-container" style="display:none;"></div>
         </div>
     </div>
 
     <!--JS logic to control the modal and its various functions (user-facing only)-->
     <script>
     // logic to add new card rows and control card input fields for each deck setup section
-    function addNewCardRow() {
+    // TODO: Refactor these 4 functions into a single function that takes in the deck number as an argument to reduce code repetition
+    // Same for the templates - hopefully this will fix the issue where deck numbers continue sequentially from one deck to another
+    // instead of resetting back to 1 for each new deck since they are currently sharing the same class names and query selectors
+    function addNewCardRow1() {
         const container = document.getElementById('card-list');
-        const template = document.getElementById('card-row-template');
+        const template = document.getElementById('card-row-template-1');
+        const clone = template.content.cloneNode(true);
+
+        container.appendChild(clone);
+        updateNumbers();
+    }
+    function addNewCardRow2() {
+        const container = document.getElementById('card-list-2');
+        const template = document.getElementById('card-row-template-2');
+        const clone = template.content.cloneNode(true);
+
+        container.appendChild(clone);
+        updateNumbers();
+    }
+    function addNewCardRow3() {
+        const container = document.getElementById('card-list-3');
+        const template = document.getElementById('card-row-template-3');
+        const clone = template.content.cloneNode(true);
+
+        container.appendChild(clone);
+        updateNumbers();
+    }
+    function addNewCardRow4() {
+        const container = document.getElementById('card-list-4');
+        const template = document.getElementById('card-row-template-4');
         const clone = template.content.cloneNode(true);
 
         container.appendChild(clone);
@@ -273,23 +386,15 @@
         return deck;
     }
 
-    function launchSetupModal() {
-        document.getElementById('modalContainer').style.display = 'block';
-    }
-    function closeSetupModal() {
-        document.getElementById('modalContainer').style.display = 'none';
-    }
-
-    let selectedColor = ""; // stores the hex code of the card face background color
-    const picker = document.getElementById('colorPicker');
-    const chooseBtn = document.getElementById('chooseBtn');
-
-    chooseBtn.addEventListener('click', () => {
-        // save the 7-character hex code to the selectedColor variable
-        selectedColor = picker.value;
-        console.log("User color input saved successfully:", selectedColor);
-        // we will then leverage selectedColor when rendering the deck(s)
-    })
+    // Handle color picker selections for each deck
+    document.querySelectorAll('.chooseBtn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            const deckNum = btn.getAttribute('data-deck');
+            const colorValue = document.getElementById(`colorPicker-${deckNum}`).value;
+            console.log(`Deck ${deckNum} color selected: ${colorValue}`);
+        });
+    });
 
     // Handle dynamic deck configuration sections
     const numDecksSelect = document.getElementById('num-decks');
