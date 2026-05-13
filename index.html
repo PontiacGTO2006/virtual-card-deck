@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Virtual Card Decks v1</title>
+    <title>Virtual Card Decks v2</title>
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -14,7 +14,7 @@
 <body>
     <h1>Virtual Card Decks: Version 2 (Dynamic; WIP)</h1>
     
-    <p>To set up your card deck, click the "Setup Decks" button below and customize your setup. Optionally, click one of the buttons below to load from a preset. You can have up to 100 cards per deck and up to 4 decks.</p>
+    <p>To set up your card deck, click the "Setup Decks" button below and customize your setup. Once you submit your configuration, the decks will be automatically created and should persist.</p>
     
     <h2>Deck Usage Instructions</h2>
     <p>Click on the top card to draw it. Click anywhere on the card again to dismiss it.</p>
@@ -48,7 +48,7 @@
             </button>
             <form class="setup-form" id="setup-form">
                 <div style="margin-bottom: 15px;">
-                    <label for="num-decks" style="display:block; margin-bottom:5px;">Number of Decks:</label>
+                    <label for="num-decks" style="display:block; margin-bottom:5px; font-size: 16px; font-family: Inter;"><strong>Number of Decks:</strong></label>
                     <select name="num-decks" id="num-decks" style="width: 50%; padding: 5px;">
                         <option value="1">1</option>
                         <option value="2">2</option>
@@ -75,7 +75,26 @@
                     <label for="deck1-card-back-art" style="display:block; margin-bottom:8px;"><strong>Card Back Art (any image format):</strong></label>
                     <div style="gap: 10px; align-items: center;">
                         <input type="file" accept="image/*" name="deck1-card-back-art" id="deck1-card-back-art" style="flex-grow: 1;">
-                        <button type="button" style="padding: 10px 10px;">Upload</button>
+                        <button type="button" id="upload-btn" style="padding: 10px 10px;" onclick="uploadFile() // must define that function">Upload</button>
+                        <span id="upload-message" style="display: none; margin-left: 10px; color: rgb(74, 228, 74);">File uploaded successfully!</span>
+                        <!--Code to handle the uploading of files-->
+                        <script>
+                            const btn1 = document.getElementById('upload-btn');
+                            const message1 = document.getElementById('upload-message');
+                            function uploadFile() {
+                                const fileInput = document.getElementById('deck1-card-back-art');
+                                const file = fileInput.files[0];
+                                
+                                if (file) {
+                                    // show a success message when the file is uploaded
+                                    // we aren't actually processing the file onto a server yet, but this is where that logic would go in the future
+                                    message1.style.display = 'inline';
+
+                                } else {
+                                    alert('Please select a file to upload.');
+                                }
+                            }
+                        </script>
                     </div>
                 </div>
 
@@ -101,7 +120,7 @@
                         <!-- Dynamically generated card inputs will go here -->
                     </div>
 
-                    <button type="button" onclick="addNewCardRow1()" style="margin-top: 10px;">
+                    <button type="button" onclick="addNewCardRow(1)" style="margin-top: 10px;">
                         + Add Card
                     </button> <!--button to add a card to the creation list-->
 
@@ -115,10 +134,10 @@
                     <div class="card-entry" style="display: flex; gap: 10px; margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 10px">
                         <span class="card-number" style="font-weight: bold; min-width: 25px;">1.</span>
                         <div style="flex-grow: 1;">
-                            <input type="text" placeholder="Card Title" id="card-title" style="width: 100%; margin-bottom: 5px;">
-                            <textarea class="card-description" id="card-description" onclick="this.addEventListener('mousedown', function(e) {setTimeout(() => {const end = this.value.length; this.setSelectionRange(end, end); this.focus();}, 0); });" placeholder="Card Description" style="width: 100%; height: 50px;"></textarea>
+                            <input type="text" placeholder="Card Title" class="card-title" style="width: 100%; margin-bottom: 5px;">
+                            <textarea class="card-description" onclick="this.addEventListener('mousedown', function(e) {setTimeout(() => {const end = this.value.length; this.setSelectionRange(end, end); this.focus();}, 0); });" placeholder="Card Description" style="width: 100%; height: 50px; font-family:'Segoe UI', Tahoma, Verdana, sans-serif;"></textarea>
                         </div>
-                    <button type="button" onclick="this.parentElement.remove(); updateNumbers();" style="color: rgb(255, 255, 255);"><i class="fa-solid fa-xmark"></i></button>
+                    <button type="button" onclick="removeCardRow(this)" style="color: rgb(255, 255, 255);"><i class="fa-solid fa-xmark"></i></button>
                     </div>
                 </template>
                 </div>
@@ -130,8 +149,7 @@
                     <label for="deck2-name" style="display:block; margin-bottom:5px;">Deck Name:</label>
                     <input name="deck2-name" id="deck2-name" style="width: 50%; padding: 5px; box-sizing:border-box;" placeholder="World Events">
                 </div>
-
-                <!-- Improved File Upload Section -->
+                
                 <div class="cardback-group" style="
                     padding: 15px;
                     border-radius: 5px;
@@ -140,7 +158,26 @@
                     <label for="card-back-art" style="display:block; margin-bottom:8px;"><strong>Card Back Art (any image format):</strong></label>
                     <div style="gap: 10px; align-items: center;">
                         <input type="file" accept="image/*" name="deck2-card-back-art" id="deck2-card-back-art" style="flex-grow: 1;">
-                        <button type="button" style="padding: 10px 10px;">Upload</button>
+                        <button type="button" id="upload-btn-2" style="padding: 10px 10px;" onclick="uploadFile2() // must define that function">Upload</button>
+                        <span id="upload-message-2" style="display: none; margin-left: 10px; color: rgb(74, 228, 74);">File uploaded successfully!</span>
+                        <!--Code to handle the uploading of files-->
+                        <script>
+                            const btn2 = document.getElementById('upload-btn-2');
+                            const message2 = document.getElementById('upload-message-2');
+                            function uploadFile2() {
+                                const fileInput = document.getElementById('deck2-card-back-art');
+                                const file = fileInput.files[0];
+                                
+                                if (file) {
+                                    // show a success message when the file is uploaded
+                                    // we aren't actually processing the file onto a server yet, but this is where that logic would go in the future
+                                    message2.style.display = 'inline';
+
+                                } else {
+                                    alert('Please select a file to upload.');
+                                }
+                            }
+                        </script>
                     </div>
                 </div>
 
@@ -166,7 +203,7 @@
                         <!-- Dynamically generated card inputs will go here -->
                     </div>
 
-                    <button type="button" onclick="addNewCardRow2()" style="margin-top: 10px;">
+                    <button type="button" onclick="addNewCardRow(2)" style="margin-top: 10px;">
                         + Add Card
                     </button> <!--button to add a card to the creation list-->
 
@@ -180,10 +217,10 @@
                     <div class="card-entry" style="display: flex; gap: 10px; margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 10px">
                         <span class="card-number" style="font-weight: bold; min-width: 25px;">1.</span>
                         <div style="flex-grow: 1;">
-                            <input type="text" placeholder="Card Title" id="card-title" style="width: 100%; margin-bottom: 5px;">
-                            <textarea class="card-description" id="card-description" onclick="this.addEventListener('mousedown', function(e) {setTimeout(() => {const end = this.value.length; this.setSelectionRange(end, end); this.focus();}, 0); });" placeholder="Card Description" style="width: 100%; height: 50px;"></textarea>
+                            <input type="text" placeholder="Card Title" class="card-title" style="width: 100%; margin-bottom: 5px;">
+                            <textarea class="card-description" onclick="this.addEventListener('mousedown', function(e) {setTimeout(() => {const end = this.value.length; this.setSelectionRange(end, end); this.focus();}, 0); });" placeholder="Card Description" style="width: 100%; height: 50px;"></textarea>
                         </div>
-                    <button type="button" onclick="this.parentElement.remove(); updateNumbers();" style="color: rgb(255, 255, 255);"><i class="fa-solid fa-xmark"></i></button>
+                    <button type="button" onclick="removeCardRow(this)" style="color: rgb(255, 255, 255);"><i class="fa-solid fa-xmark"></i></button>
                     </div>
                 </template>
                 </div>
@@ -205,7 +242,26 @@
                     <label for="deck3-card-back-art" style="display:block; margin-bottom:8px;"><strong>Card Back Art (any image format):</strong></label>
                     <div style="gap: 10px; align-items: center;">
                         <input type="file" accept="image/*" name="deck3-card-back-art" id="deck3-card-back-art" style="flex-grow: 1;">
-                        <button type="button" style="padding: 10px 10px;">Upload</button>
+                        <button type="button" id="upload-btn-3" style="padding: 10px 10px;" onclick="uploadFile3()">Upload</button>
+                        <span id="upload-message-3" style="display: none; margin-left: 10px; color: rgb(74, 228, 74);">File uploaded successfully!</span>
+                        <!--Code to handle the uploading of files-->
+                        <script>
+                            const btn3 = document.getElementById('upload-btn-3');
+                            const message3 = document.getElementById('upload-message-3');
+                            function uploadFile3() {
+                                const fileInput = document.getElementById('deck3-card-back-art');
+                                const file = fileInput.files[0];
+                                
+                                if (file) {
+                                    // show a success message when the file is uploaded
+                                    // we aren't actually processing the file onto a server yet, but this is where that logic would go in the future
+                                    message3.style.display = 'inline';
+
+                                } else {
+                                    alert('Please select a file to upload.');
+                                }
+                            }
+                        </script>
                     </div>
                 </div>
 
@@ -231,7 +287,7 @@
                         <!-- Dynamically generated card inputs will go here -->
                     </div>
 
-                    <button type="button" onclick="addNewCardRow3()" style="margin-top: 10px;">
+                    <button type="button" onclick="addNewCardRow(3)" style="margin-top: 10px;">
                         + Add Card
                     </button> <!--button to add a card to the creation list-->
 
@@ -245,10 +301,10 @@
                     <div class="card-entry" style="display: flex; gap: 10px; margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 10px">
                         <span class="card-number" style="font-weight: bold; min-width: 25px;">1.</span>
                         <div style="flex-grow: 1;">
-                            <input type="text" placeholder="Card Title" id="card-title" style="width: 100%; margin-bottom: 5px;">
-                            <textarea class="card-description" id="card-description" onclick="this.addEventListener('mousedown', function(e) {setTimeout(() => {const end = this.value.length; this.setSelectionRange(end, end); this.focus();}, 0); });" placeholder="Card Description" style="width: 100%; height: 50px;"></textarea>
+                            <input type="text" placeholder="Card Title" class="card-title" style="width: 100%; margin-bottom: 5px;">
+                            <textarea class="card-description" onclick="this.addEventListener('mousedown', function(e) {setTimeout(() => {const end = this.value.length; this.setSelectionRange(end, end); this.focus();}, 0); });" placeholder="Card Description" style="width: 100%; height: 50px;"></textarea>
                         </div>
-                    <button type="button" onclick="this.parentElement.remove(); updateNumbers();" style="color: rgb(255, 255, 255);"><i class="fa-solid fa-xmark"></i></button>
+                    <button type="button" onclick="removeCardRow(this)" style="color: rgb(255, 255, 255);"><i class="fa-solid fa-xmark"></i></button>
                     </div>
                 </template>
                 </div>
@@ -270,7 +326,26 @@
                     <label for="deck4-card-back-art" style="display:block; margin-bottom:8px;"><strong>Card Back Art (any image format):</strong></label>
                     <div style="gap: 10px; align-items: center;">
                         <input type="file" accept="image/*" name="deck4-card-back-art" id="deck4-card-back-art" style="flex-grow: 1;">
-                        <button type="button" style="padding: 10px 10px;">Upload</button>
+                        <button type="button" id="upload-btn-4" style="padding: 10px 10px;" onclick="uploadFile4()">Upload</button>
+                        <span id="upload-message-4" style="display: none; margin-left: 10px; color: rgb(74, 228, 74);">File uploaded successfully!</span>
+                        <!--Code to handle the uploading of files-->
+                        <script>
+                            const btn4 = document.getElementById('upload-btn-4');
+                            const message4 = document.getElementById('upload-message-4');
+                            function uploadFile4() {
+                                const fileInput = document.getElementById('deck4-card-back-art');
+                                const file = fileInput.files[0];
+                                
+                                if (file) {
+                                    // show a success message when the file is uploaded
+                                    // we aren't actually processing the file onto a server yet, but this is where that logic would go in the future
+                                    message4.style.display = 'inline';
+
+                                } else {
+                                    alert('Please select a file to upload.');
+                                }
+                            }
+                        </script>
                     </div>
                 </div>
 
@@ -296,7 +371,7 @@
                         <!-- Dynamically generated card inputs will go here -->
                     </div>
 
-                    <button type="button" onclick="addNewCardRow4()" style="margin-top: 10px;">
+                    <button type="button" onclick="addNewCardRow(4)" style="margin-top: 10px;">
                         + Add Card
                     </button> <!--button to add a card to the creation list-->
 
@@ -310,10 +385,10 @@
                     <div class="card-entry" style="display: flex; gap: 10px; margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 10px">
                         <span class="card-number" style="font-weight: bold; min-width: 25px;">1.</span>
                         <div style="flex-grow: 1;">
-                            <input type="text" placeholder="Card Title" id="card-title" style="width: 100%; margin-bottom: 5px;">
-                            <textarea class="card-description" id="card-description" onclick="this.addEventListener('mousedown', function(e) {setTimeout(() => {const end = this.value.length; this.setSelectionRange(end, end); this.focus();}, 0); });" placeholder="Card Description" style="width: 100%; height: 50px;"></textarea>
+                            <input type="text" placeholder="Card Title" class="card-title" style="width: 100%; margin-bottom: 5px;">
+                            <textarea class="card-description" onclick="this.addEventListener('mousedown', function(e) {setTimeout(() => {const end = this.value.length; this.setSelectionRange(end, end); this.focus();}, 0); });" placeholder="Card Description" style="width: 100%; height: 50px;"></textarea>
                         </div>
-                    <button type="button" onclick="this.parentElement.remove(); updateNumbers();" style="color: rgb(255, 255, 255);"><i class="fa-solid fa-xmark"></i></button>
+                    <button type="button" onclick="removeCardRow(this)" style="color: rgb(255, 255, 255);"><i class="fa-solid fa-xmark"></i></button>
                     </div>
                 </template>
                 </div>
@@ -332,44 +407,31 @@
     <!--JS logic to control the modal and its various functions (user-facing only)-->
     <script>
     // logic to add new card rows and control card input fields for each deck setup section
-    // TODO: Refactor these 4 functions into a single function that takes in the deck number as an argument to reduce code repetition
-    // Same for the templates - hopefully this will fix the issue where deck numbers continue sequentially from one deck to another
-    // instead of resetting back to 1 for each new deck since they are currently sharing the same class names and query selectors
-    function addNewCardRow1() {
-        const container = document.getElementById('card-list');
-        const template = document.getElementById('card-row-template-1');
-        const clone = template.content.cloneNode(true);
+    function addNewCardRow(deckNum) {
+        const container = document.getElementById(`card-list-${deckNum}`);
+        const template = document.getElementById(`card-row-template-${deckNum}`);
+        if (!container || !template) return;
 
-        container.appendChild(clone);
-        updateNumbers();
-    }
-    function addNewCardRow2() {
-        const container = document.getElementById('card-list-2');
-        const template = document.getElementById('card-row-template-2');
         const clone = template.content.cloneNode(true);
-
         container.appendChild(clone);
-        updateNumbers();
-    }
-    function addNewCardRow3() {
-        const container = document.getElementById('card-list-3');
-        const template = document.getElementById('card-row-template-3');
-        const clone = template.content.cloneNode(true);
-
-        container.appendChild(clone);
-        updateNumbers();
-    }
-    function addNewCardRow4() {
-        const container = document.getElementById('card-list-4');
-        const template = document.getElementById('card-row-template-4');
-        const clone = template.content.cloneNode(true);
-
-        container.appendChild(clone);
-        updateNumbers();
+        updateNumbers(deckNum);
     }
 
-    function updateNumbers() {
-        const rows = document.querySelectorAll('.card-entry');
+    function removeCardRow(button) {
+        const row = button.closest('.card-entry');
+        if (!row) return;
+
+        const container = row.parentElement;
+        const deckNum = container.id.split('-').pop();
+        row.remove();
+        updateNumbers(deckNum);
+    }
+
+    function updateNumbers(deckNum) {
+        const container = document.getElementById(`card-list-${deckNum}`);
+        if (!container) return;
+
+        const rows = container.querySelectorAll('.card-entry');
         rows.forEach((row, index) => {
             row.querySelector('.card-number').innerText = `${index + 1}.`;
         });
@@ -379,7 +441,7 @@
         const rows = document.querySelectorAll('.card-entry');
         const deck = Array.from(rows).map(row => ({
             title: row.querySelector('.card-title').value,
-            description: row.querySelector('.card-desc').value
+            description: row.querySelector('.card-description').value
         }));
         
         console.log("Collected Deck:", deck);

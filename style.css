@@ -1,8 +1,8 @@
 body {
     text-align: center;
     font-family: 'Inter', sans-serif;
-    background-color: #1e1e1e;
-    color: white;
+    background-color: #1a1a1a;
+    color: rgb(255, 255, 255);
     margin: 20px 80px; /* Remove default margin */
     padding: 0; /* Remove default padding */
     display: flex;
@@ -21,8 +21,13 @@ h1 {
     margin: 10px 0; /* Reduce space above and below */
 }
 
+h2, h3 {
+    font-family: Inter;
+}
+
 p {
     line-height: 23px;
+    color: rgb(218, 218, 218);
 }
 
 .deck-wrapper {
@@ -51,11 +56,6 @@ p {
     background: #555; /* Darker on hover for interactivity */
 }
 
-.button:hover {
-    background-color: darkred;
-    transition: 3.8s;
-}
-
 .deck-section {
     text-align: center;
 }
@@ -65,13 +65,14 @@ p {
 }
 
 button {
-    background-color: #c27b10;
+    background-color: #4883cf;
     color: white;
     border: none;
     padding: 10px 16px;
     margin: 5px;
     cursor: pointer;
     font-size: 16px;
+    font-family: 'Segoe UI', Tahoma, Verdana, sans-serif;
     border-radius: 6px;
     transition: 0.3s;
 }
@@ -107,7 +108,7 @@ button {
 }
 
 button:hover {
-    background-color: #e68900;
+    background-color: #5c5c5c;
 }
 
 .card-counter {
@@ -218,7 +219,8 @@ button:hover {
 
 /* Enhanced title */
 .card-title {
-    font-size: 24px;
+    font-size: 16px;
     font-weight: bold;
+    font-family: Inter;
     margin-bottom: 10px;
 }

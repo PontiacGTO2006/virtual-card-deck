@@ -16,7 +16,7 @@ The architecture for V2 of the virtual card deck involves three main components:
 **The modal input processing system** will utilize **LocalStorage** in the browser to store the user's deck creation preferences. The data remains even after the browser is closed and reopened; this way, there is no need to have functionality for creating presets.
 
 ## Current Bugs/Limitations (Personal reference)
-- Right now, you cannot use the +Add Card button for configuring the deck 1. This is likely because of duplication errors and the way the deck details querying is set up.
-- However, YOU CAN use the Add Card buttons for decks 2, 3, and 4. But in order to save the details for those decks, you have to go back up to deck 1 and hit the Save Details button for Deck 1. Also, when you click the + Add Card button for decks 2, 3, and 4 in succession, the numbers continue instead of resetting at 1 for each deck.
+- When the page is reloaded, the modal loses all data pertaining to the individual card details (e.g., the textarea and the title field). Make it so that this data remains persistent, like the rest of the modal, even when the page is reloaded.
+- It looks like the save-data mechanism for the card data is working a little strange. The "save details" button for the other three decks doesn't trigger an error, but it doesn't seem to be saving the details to localStorage either. This ties into the next point.
 - It only looks like the data for the custom cards are being saved right now into localStorage. Even when the master Submit button at the bottom of the modal is pressed, no other data is saved. 
 - It seems like clicking the Submit button for the modal clears the localStorage, which shouldn't be happening.
