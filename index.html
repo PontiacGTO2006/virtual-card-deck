@@ -9,6 +9,46 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"> <!--FontAwesome 6 embed since we don't like logging in and creating stupid Kits here on the Design Team-->
+    <script>
+        function initUpload(deck) {
+            const suffix = deck === 1 ? '' : '-' + deck;
+            const btn = document.getElementById('upload-btn' + suffix);
+            const message = document.getElementById('upload-message' + suffix);
+            const fileInput = document.getElementById('deck' + deck + '-card-back-art');
+            const nameDisplay = document.getElementById('persisted-file-name' + suffix);
+
+            // Restore data on page load
+            const savedFileName = sessionStorage.getItem('deck' + deck + '_filename');
+            const savedFileData = sessionStorage.getItem('deck' + deck + '_filedata');
+            if (savedFileName && savedFileData) {
+                nameDisplay.textContent = `Saved file: ${savedFileName}`;
+                message.style.display = 'inline';
+                nameDisplay.style.color = 'rgb(182, 174, 174)'; // Success color
+            }
+
+            // Define the upload function
+            const funcName = 'uploadFile' + (deck === 1 ? '' : deck);
+            window[funcName] = function() {
+                const file = fileInput.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        sessionStorage.setItem('deck' + deck + '_filename', file.name);
+                        sessionStorage.setItem('deck' + deck + '_filedata', e.target.result);
+                        nameDisplay.textContent = `Saved file: ${file.name}`;
+                        message.style.display = 'inline';
+                    };
+                    reader.readAsDataURL(file);
+                } else {
+                    if (sessionStorage.getItem('deck' + deck + '_filedata')) {
+                        message.style.display = 'inline';
+                    } else {
+                        alert('Please select a file to upload.');
+                    }
+                }
+            };
+        }
+    </script>
 
 </head>
 <body>
@@ -77,23 +117,10 @@
                         <input type="file" accept="image/*" name="deck1-card-back-art" id="deck1-card-back-art" style="flex-grow: 1;">
                         <button type="button" id="upload-btn" style="padding: 10px 10px;" onclick="uploadFile() // must define that function">Upload</button>
                         <span id="upload-message" style="display: none; margin-left: 10px; color: rgb(74, 228, 74);">File uploaded successfully!</span>
-                        <!--Code to handle the uploading of files-->
+                        <!-- Visual anchor to show the persisted file name after a reload -->
+                        <div id="persisted-file-name" style="margin-top: 5px; color: #555;"></div>
                         <script>
-                            const btn1 = document.getElementById('upload-btn');
-                            const message1 = document.getElementById('upload-message');
-                            function uploadFile() {
-                                const fileInput = document.getElementById('deck1-card-back-art');
-                                const file = fileInput.files[0];
-                                
-                                if (file) {
-                                    // show a success message when the file is uploaded
-                                    // we aren't actually processing the file onto a server yet, but this is where that logic would go in the future
-                                    message1.style.display = 'inline';
-
-                                } else {
-                                    alert('Please select a file to upload.');
-                                }
-                            }
+                            initUpload(1);
                         </script>
                     </div>
                 </div>
@@ -134,8 +161,8 @@
                     <div class="card-entry" style="display: flex; gap: 10px; margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 10px">
                         <span class="card-number" style="font-weight: bold; min-width: 25px;">1.</span>
                         <div style="flex-grow: 1;">
-                            <input type="text" placeholder="Card Title" class="card-title" style="width: 100%; margin-bottom: 5px;">
-                            <textarea class="card-description" onclick="this.addEventListener('mousedown', function(e) {setTimeout(() => {const end = this.value.length; this.setSelectionRange(end, end); this.focus();}, 0); });" placeholder="Card Description" style="width: 100%; height: 50px; font-family:'Segoe UI', Tahoma, Verdana, sans-serif;"></textarea>
+                            <input id="card-title-1" type="text" placeholder="Card Title" class="card-title" style="width: 100%; margin-bottom: 5px;">
+                            <textarea id="card-description-1" class="card-description" onclick="this.addEventListener('mousedown', function(e) {setTimeout(() => {const end = this.value.length; this.setSelectionRange(end, end); this.focus();}, 0); });" placeholder="Card Description" style="width: 100%; height: 50px; font-family:'Segoe UI', Tahoma, Verdana, sans-serif;"></textarea>
                         </div>
                     <button type="button" onclick="removeCardRow(this)" style="color: rgb(255, 255, 255);"><i class="fa-solid fa-xmark"></i></button>
                     </div>
@@ -160,23 +187,10 @@
                         <input type="file" accept="image/*" name="deck2-card-back-art" id="deck2-card-back-art" style="flex-grow: 1;">
                         <button type="button" id="upload-btn-2" style="padding: 10px 10px;" onclick="uploadFile2() // must define that function">Upload</button>
                         <span id="upload-message-2" style="display: none; margin-left: 10px; color: rgb(74, 228, 74);">File uploaded successfully!</span>
-                        <!--Code to handle the uploading of files-->
+                        <!-- Visual anchor to show the persisted file name after a reload -->
+                        <div id="persisted-file-name-2" style="margin-top: 5px; color: #555;"></div>
                         <script>
-                            const btn2 = document.getElementById('upload-btn-2');
-                            const message2 = document.getElementById('upload-message-2');
-                            function uploadFile2() {
-                                const fileInput = document.getElementById('deck2-card-back-art');
-                                const file = fileInput.files[0];
-                                
-                                if (file) {
-                                    // show a success message when the file is uploaded
-                                    // we aren't actually processing the file onto a server yet, but this is where that logic would go in the future
-                                    message2.style.display = 'inline';
-
-                                } else {
-                                    alert('Please select a file to upload.');
-                                }
-                            }
+                            initUpload(2);
                         </script>
                     </div>
                 </div>
@@ -217,8 +231,8 @@
                     <div class="card-entry" style="display: flex; gap: 10px; margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 10px">
                         <span class="card-number" style="font-weight: bold; min-width: 25px;">1.</span>
                         <div style="flex-grow: 1;">
-                            <input type="text" placeholder="Card Title" class="card-title" style="width: 100%; margin-bottom: 5px;">
-                            <textarea class="card-description" onclick="this.addEventListener('mousedown', function(e) {setTimeout(() => {const end = this.value.length; this.setSelectionRange(end, end); this.focus();}, 0); });" placeholder="Card Description" style="width: 100%; height: 50px;"></textarea>
+                            <input id="card-title-2" type="text" placeholder="Card Title" class="card-title" style="width: 100%; margin-bottom: 5px;">
+                            <textarea id="card-description-2" class="card-description" onclick="this.addEventListener('mousedown', function(e) {setTimeout(() => {const end = this.value.length; this.setSelectionRange(end, end); this.focus();}, 0); });" placeholder="Card Description" style="width: 100%; height: 50px;"></textarea>
                         </div>
                     <button type="button" onclick="removeCardRow(this)" style="color: rgb(255, 255, 255);"><i class="fa-solid fa-xmark"></i></button>
                     </div>
@@ -244,23 +258,10 @@
                         <input type="file" accept="image/*" name="deck3-card-back-art" id="deck3-card-back-art" style="flex-grow: 1;">
                         <button type="button" id="upload-btn-3" style="padding: 10px 10px;" onclick="uploadFile3()">Upload</button>
                         <span id="upload-message-3" style="display: none; margin-left: 10px; color: rgb(74, 228, 74);">File uploaded successfully!</span>
-                        <!--Code to handle the uploading of files-->
+                        <!-- Visual anchor to show the persisted file name after a reload -->
+                        <div id="persisted-file-name-3" style="margin-top: 5px; color: #555;"></div>
                         <script>
-                            const btn3 = document.getElementById('upload-btn-3');
-                            const message3 = document.getElementById('upload-message-3');
-                            function uploadFile3() {
-                                const fileInput = document.getElementById('deck3-card-back-art');
-                                const file = fileInput.files[0];
-                                
-                                if (file) {
-                                    // show a success message when the file is uploaded
-                                    // we aren't actually processing the file onto a server yet, but this is where that logic would go in the future
-                                    message3.style.display = 'inline';
-
-                                } else {
-                                    alert('Please select a file to upload.');
-                                }
-                            }
+                            initUpload(3);
                         </script>
                     </div>
                 </div>
@@ -301,8 +302,8 @@
                     <div class="card-entry" style="display: flex; gap: 10px; margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 10px">
                         <span class="card-number" style="font-weight: bold; min-width: 25px;">1.</span>
                         <div style="flex-grow: 1;">
-                            <input type="text" placeholder="Card Title" class="card-title" style="width: 100%; margin-bottom: 5px;">
-                            <textarea class="card-description" onclick="this.addEventListener('mousedown', function(e) {setTimeout(() => {const end = this.value.length; this.setSelectionRange(end, end); this.focus();}, 0); });" placeholder="Card Description" style="width: 100%; height: 50px;"></textarea>
+                            <input id="card-title-3" type="text" placeholder="Card Title" class="card-title" style="width: 100%; margin-bottom: 5px;">
+                            <textarea id="card-description-3" class="card-description" onclick="this.addEventListener('mousedown', function(e) {setTimeout(() => {const end = this.value.length; this.setSelectionRange(end, end); this.focus();}, 0); });" placeholder="Card Description" style="width: 100%; height: 50px;"></textarea>
                         </div>
                     <button type="button" onclick="removeCardRow(this)" style="color: rgb(255, 255, 255);"><i class="fa-solid fa-xmark"></i></button>
                     </div>
@@ -329,22 +330,10 @@
                         <button type="button" id="upload-btn-4" style="padding: 10px 10px;" onclick="uploadFile4()">Upload</button>
                         <span id="upload-message-4" style="display: none; margin-left: 10px; color: rgb(74, 228, 74);">File uploaded successfully!</span>
                         <!--Code to handle the uploading of files-->
+                        <!-- Visual anchor to show the persisted file name after a reload -->
+                        <div id="persisted-file-name-4" style="margin-top: 5px; color: #555;"></div>
                         <script>
-                            const btn4 = document.getElementById('upload-btn-4');
-                            const message4 = document.getElementById('upload-message-4');
-                            function uploadFile4() {
-                                const fileInput = document.getElementById('deck4-card-back-art');
-                                const file = fileInput.files[0];
-                                
-                                if (file) {
-                                    // show a success message when the file is uploaded
-                                    // we aren't actually processing the file onto a server yet, but this is where that logic would go in the future
-                                    message4.style.display = 'inline';
-
-                                } else {
-                                    alert('Please select a file to upload.');
-                                }
-                            }
+                            initUpload(4);
                         </script>
                     </div>
                 </div>
@@ -385,8 +374,8 @@
                     <div class="card-entry" style="display: flex; gap: 10px; margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 10px">
                         <span class="card-number" style="font-weight: bold; min-width: 25px;">1.</span>
                         <div style="flex-grow: 1;">
-                            <input type="text" placeholder="Card Title" class="card-title" style="width: 100%; margin-bottom: 5px;">
-                            <textarea class="card-description" onclick="this.addEventListener('mousedown', function(e) {setTimeout(() => {const end = this.value.length; this.setSelectionRange(end, end); this.focus();}, 0); });" placeholder="Card Description" style="width: 100%; height: 50px;"></textarea>
+                            <input id="card-title-4" type="text" placeholder="Card Title" class="card-title" style="width: 100%; margin-bottom: 5px;">
+                            <textarea id="card-description-4" class="card-description" onclick="this.addEventListener('mousedown', function(e) {setTimeout(() => {const end = this.value.length; this.setSelectionRange(end, end); this.focus();}, 0); });" placeholder="Card Description" style="width: 100%; height: 50px;"></textarea>
                         </div>
                     <button type="button" onclick="removeCardRow(this)" style="color: rgb(255, 255, 255);"><i class="fa-solid fa-xmark"></i></button>
                     </div>

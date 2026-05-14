@@ -288,6 +288,30 @@ document.addEventListener('DOMContentLoaded', () => {
             closeSetupModal();
         });
     }
+        
+    // Save user's progress in the forms and textarea to sessionStorage
+    const storageKey = "form_progress";
+    const savedData = sessionStorage.getItem(storageKey);
+    if (savedData) {
+        const data = JSON.parse(savedData);
+        Object.keys(data).forEach(id => {
+            const input = setupForm.elements[id];
+            if (input) {
+                input.value = data[id];
+            }
+        });
+    }
+
+    // listen for inputs made into the form and save that data to sessionStorage
+    setupForm.addEventListener('input', () => {
+        const formData = new FormData(setupForm);
+        const data = Object.fromEntries(formData.entries()); // the data we're attempting to save to sessionStorage
+        sessionStorage.setItem(storageKey, JSON.stringify(data)); // save the data to sessionStorage on every input event
+    });
+
+    setupForm.addEventListener('submit', () => {
+        sessionStorage.removeItem(storageKey); // clear the saved data on form submission
+    })
 
     // Card details form handling (title and description)
     const saveBtn = document.getElementById('submit-card-details');

@@ -16,7 +16,8 @@ The architecture for V2 of the virtual card deck involves three main components:
 **The modal input processing system** will utilize **LocalStorage** in the browser to store the user's deck creation preferences. The data remains even after the browser is closed and reopened; this way, there is no need to have functionality for creating presets.
 
 ## Current Bugs/Limitations (Personal reference)
-- When the page is reloaded, the modal loses all data pertaining to the individual card details (e.g., the textarea and the title field). Make it so that this data remains persistent, like the rest of the modal, even when the page is reloaded.
+- When the page is reloaded, the modal saves all the uploaded files. However, the deck names, colors, and individual card details are lost.
 - It looks like the save-data mechanism for the card data is working a little strange. The "save details" button for the other three decks doesn't trigger an error, but it doesn't seem to be saving the details to localStorage either. This ties into the next point.
-- It only looks like the data for the custom cards are being saved right now into localStorage. Even when the master Submit button at the bottom of the modal is pressed, no other data is saved. 
+- It only looks like the data for the custom cards are being saved right now into localStorage. Even when the master Submit button at the bottom of the modal is pressed, no other data is saved. In addition, only the name of the first deck is being saved.
 - It seems like clicking the Submit button for the modal clears the localStorage, which shouldn't be happening.
+- Keep in mind that the quota for sessionStorage is **5 MB**. In the future, you may need to implement compression on upload or prevent users from uploading files over 1MB for the card back art, to prevent overrunning this quota. (There will only ever be four decks, each with its own one card back art file).
